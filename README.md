@@ -4,11 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JARVIS — Proyecto Superman V3</title>
-<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
@@ -217,7 +214,13 @@
   .view-section.active {
     display: flex;
     flex-direction: column;
-    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: customFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* AÑADIDO: Keyframe explícito para arreglar la opacidad (Fade In) */
+  @keyframes customFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
 
   /* Grid Layouts mimicking the image */
@@ -232,7 +235,6 @@
 </head>
 <body class="h-screen w-screen flex flex-col font-sans">
   
-  <!-- Dynamic Background Element -->
   <div class="bg-grid"></div>
 
   <header class="h-16 border-b border-sys-border bg-sys-base/80 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-50">
@@ -247,13 +249,11 @@
         </div>
       </div>
       
-      <!-- Back button (hidden on main dashboard) -->
       <button id="btnBack" class="hidden ml-6 text-sys-textMuted hover:text-white flex items-center gap-2 text-sm transition-colors border border-sys-border px-3 py-1.5 rounded-md bg-sys-panel hover:bg-sys-panelHover">
         <i class="fa-solid fa-arrow-left"></i> Retornar al Mainframe
       </button>
     </div>
 
-    <!-- Central Status -->
     <div class="flex items-center gap-6">
       <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-900/20 border border-green-500/30">
         <div class="w-2 h-2 rounded-full bg-sys-success animate-pulse"></div>
@@ -263,7 +263,6 @@
       <div id="sysDate" class="font-mono text-xs text-sys-textMuted uppercase hidden sm:block">-- --- ----</div>
     </div>
 
-    <!-- Right Controls -->
     <div class="flex items-center gap-4 text-sys-textMuted">
       <button class="hover:text-white transition-colors" onclick="resetData()"><i class="fa-solid fa-arrows-rotate text-sm"></i></button>
       <button class="hover:text-white transition-colors"><i class="fa-regular fa-bell text-sm"></i></button>
@@ -271,17 +270,11 @@
     </div>
   </header>
 
-  <!-- Main Workspace -->
   <main class="flex-1 overflow-y-auto overflow-x-hidden relative" id="workspace">
 
-    <!-- ========================================== -->
-    <!-- VIEW: DASHBOARD (HUB)                      -->
-    <!-- ========================================== -->
     <section id="view-dashboard" class="view-section active p-4 md:p-6 w-full max-w-[1600px] mx-auto h-full">
       
-      <!-- Action Cards Row -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-6 shrink-0">
-        <!-- Training -->
         <div class="glass-panel clickable p-5 flex flex-col justify-between group h-36 relative overflow-hidden animate-slide-up stagger-1 opacity-0" onclick="navigateTo('view-training')">
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-500"></div>
           <div class="flex justify-between items-start">
@@ -296,7 +289,6 @@
           </div>
         </div>
         
-        <!-- Nutrition -->
         <div class="glass-panel clickable p-5 flex flex-col justify-between group h-36 relative overflow-hidden animate-slide-up stagger-2 opacity-0" onclick="navigateTo('view-nutrition')">
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-sys-success/10 rounded-full blur-2xl group-hover:bg-sys-success/20 transition-all duration-500"></div>
           <div class="flex justify-between items-start">
@@ -311,7 +303,6 @@
           </div>
         </div>
 
-        <!-- Habits / Protocol -->
         <div class="glass-panel clickable p-5 flex flex-col justify-between group h-36 relative overflow-hidden animate-slide-up stagger-3 opacity-0" onclick="navigateTo('view-habits')">
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all duration-500"></div>
           <div class="flex justify-between items-start">
@@ -326,7 +317,6 @@
           </div>
         </div>
 
-        <!-- Analytics -->
         <div class="glass-panel clickable p-5 flex flex-col justify-between group h-36 relative overflow-hidden animate-slide-up stagger-4 opacity-0" onclick="navigateTo('view-analytics')">
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-sys-warning/10 rounded-full blur-2xl group-hover:bg-sys-warning/20 transition-all duration-500"></div>
           <div class="flex justify-between items-start">
@@ -342,12 +332,9 @@
         </div>
       </div>
 
-      <!-- Complex Grid Layout -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 flex-1 min-h-[500px]">
         
-        <!-- Left Col: Context & Radar (Col span 4) -->
         <div class="col-span-1 md:col-span-4 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-2 opacity-0">
-          <!-- Model Context Box -->
           <div class="glass-panel p-5 flex flex-col gap-4">
             <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-2">Estado del Operador</h2>
             <div class="flex items-center gap-4">
@@ -372,14 +359,12 @@
             </div>
           </div>
 
-          <!-- Radar Widget -->
           <div class="glass-panel p-5 flex-1 flex flex-col items-center justify-center relative min-h-[250px] overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent to-sys-accent/5 pointer-events-none"></div>
             <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold absolute top-5 left-5">Biometría en Tiempo Real</h2>
             <div class="w-40 h-40 mt-6 relative animate-float">
               <div class="radar-container">
                 <div class="radar-sweep animate-radar-sweep"></div>
-                <!-- Radar dots -->
                 <div class="absolute w-2 h-2 bg-sys-accent rounded-full top-[30%] left-[60%] shadow-[0_0_10px_#00f0ff] animate-pulse"></div>
                 <div class="absolute w-2 h-2 bg-sys-success rounded-full bottom-[40%] right-[30%] shadow-[0_0_10px_#00ff88]"></div>
               </div>
@@ -388,9 +373,7 @@
           </div>
         </div>
 
-        <!-- Middle Col: Tasks & Overview (Col span 5) -->
         <div class="col-span-1 md:col-span-5 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-3 opacity-0">
-          <!-- Daily Completion Donut -->
           <div class="glass-panel p-6 flex flex-col">
             <div class="flex justify-between items-center mb-8">
               <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold">Resumen Diario</h2>
@@ -398,7 +381,6 @@
             </div>
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-12 flex-1">
-              <!-- Main Donut -->
               <div class="relative w-40 h-40 flex-shrink-0 animate-float">
                 <svg viewBox="0 0 100 100" class="donut-chart w-full h-full">
                   <circle class="donut-bg" cx="50" cy="50" r="40"></circle>
@@ -411,7 +393,6 @@
                 </div>
               </div>
               
-              <!-- Legend -->
               <div class="flex flex-col gap-4 w-full sm:w-auto min-w-[140px]">
                 <div class="flex items-center justify-between text-xs bg-sys-panel/40 p-2 rounded border border-sys-border hover:bg-sys-panel transition-colors">
                   <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div><span class="text-sys-textMuted">Entreno</span></div>
@@ -429,19 +410,15 @@
             </div>
           </div>
 
-          <!-- Mini Schedule -->
           <div class="glass-panel p-5 flex-1 flex flex-col relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-bl-full pointer-events-none"></div>
             <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-4">Agenda del Sistema</h2>
             <div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar" id="dashSchedule">
-              <!-- JS Populated -->
-            </div>
+              </div>
           </div>
         </div>
 
-        <!-- Right Col: System Overview (Col span 3) -->
         <div class="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-4 opacity-0">
-          <!-- Memory/Condition -->
           <div class="glass-panel p-5 relative overflow-hidden">
             <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-sys-success/10 rounded-full blur-xl pointer-events-none"></div>
             <div class="flex justify-between items-center mb-5">
@@ -457,7 +434,6 @@
             </div>
           </div>
 
-          <!-- Macros Mini -->
           <div class="glass-panel p-5 flex-1 flex flex-col">
             <div class="flex justify-between items-center mb-6">
               <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold">Consumo Energía</h2>
@@ -493,9 +469,6 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW: ENTRENAMIENTO                        -->
-    <!-- ========================================== -->
     <section id="view-training" class="view-section p-4 md:p-6 max-w-[1000px] mx-auto h-full">
       <div class="glass-panel p-6 flex flex-col h-full">
         <div class="flex justify-between items-start mb-6 border-b border-sys-border pb-4">
@@ -511,8 +484,7 @@
         </div>
 
         <div class="flex-1 overflow-y-auto pr-2 space-y-4" id="trainExerciseList">
-          <!-- Populated by JS -->
-        </div>
+          </div>
 
         <div class="mt-6 pt-4 border-t border-sys-border flex justify-end gap-4">
           <button class="bg-sys-panel border border-sys-border text-white px-6 py-2 rounded font-mono text-sm hover:bg-sys-border transition-colors" onclick="saveTraining()">Guardar Registro Local</button>
@@ -521,12 +493,8 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW: NUTRICIÓN                            -->
-    <!-- ========================================== -->
     <section id="view-nutrition" class="view-section p-4 md:p-6 max-w-[1000px] mx-auto h-full">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
-        <!-- Target & Inputs -->
         <div class="col-span-1 glass-panel p-6 flex flex-col gap-6">
           <div>
             <h2 class="text-lg font-bold font-mono text-white border-b border-sys-border pb-2 mb-4">Registro Calórico</h2>
@@ -549,7 +517,6 @@
             </div>
           </div>
 
-          <!-- Agua -->
           <div class="mt-auto border-t border-sys-border pt-4">
             <h3 class="text-sm font-bold text-white mb-3">Hidratación (Litros)</h3>
             <div class="flex items-center justify-between bg-sys-base p-2 rounded border border-sys-border">
@@ -561,11 +528,9 @@
           </div>
         </div>
 
-        <!-- Visualizers -->
         <div class="col-span-1 lg:col-span-2 glass-panel p-6 flex flex-col">
           <h2 class="text-lg font-bold font-mono text-white border-b border-sys-border pb-2 mb-6">Estado de Recomposición</h2>
           
-          <!-- Kcal Bar -->
           <div class="mb-8">
             <div class="flex justify-between text-sm font-mono mb-2">
               <span class="text-sys-textMuted">Energía (Kcal)</span>
@@ -576,7 +541,6 @@
             </div>
           </div>
 
-          <!-- Macros Bars -->
           <div class="space-y-6">
             <div>
               <div class="flex justify-between text-sm font-mono mb-2">
@@ -618,9 +582,6 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW: HÁBITOS T                            -->
-    <!-- ========================================== -->
     <section id="view-habits" class="view-section p-4 md:p-6 max-w-[800px] mx-auto h-full">
       <div class="glass-panel p-6 h-full flex flex-col">
         <div class="flex justify-between items-center mb-6 border-b border-sys-border pb-4">
@@ -631,14 +592,10 @@
         </div>
 
         <div class="flex-1 overflow-y-auto space-y-3" id="habitsList">
-          <!-- Populated by JS to keep it DRY -->
-        </div>
+          </div>
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW: ANALÍTICAS                           -->
-    <!-- ========================================== -->
     <section id="view-analytics" class="view-section p-4 md:p-6 max-w-[1200px] mx-auto h-full">
       <div class="glass-panel p-6 h-full flex flex-col">
         <div class="flex justify-between items-center mb-6 border-b border-sys-border pb-4">
@@ -650,7 +607,6 @@
           </div>
         </div>
 
-        <!-- Monthly Grid -->
         <div class="grid grid-cols-7 gap-2 md:gap-4 mb-4" id="calendarHeader">
           <div class="text-center font-mono text-xs text-sys-textMuted py-2">DOM</div>
           <div class="text-center font-mono text-xs text-sys-textMuted py-2">LUN</div>
@@ -662,8 +618,7 @@
         </div>
         
         <div class="grid grid-cols-7 gap-2 md:gap-4 flex-1" id="calendarGrid">
-          <!-- Calendar Days JS -->
-        </div>
+          </div>
 
         <div class="mt-6 flex justify-center gap-6 border-t border-sys-border pt-4">
           <div class="flex items-center gap-2"><div class="w-3 h-3 bg-sys-panel border border-sys-border rounded"></div><span class="text-xs font-mono text-sys-textMuted">Vacío</span></div>
