@@ -36,11 +36,8 @@
     }
   }
 </script>
-<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
@@ -122,6 +119,7 @@
   .stagger-2 { animation-delay: 0.1s; }
   .stagger-3 { animation-delay: 0.15s; }
   .stagger-4 { animation-delay: 0.2s; }
+  .stagger-5 { animation-delay: 0.25s; }
 
   .radar-container {
     position: relative; width: 100%; aspect-ratio: 1; border-radius: 50%;
@@ -170,7 +168,6 @@
   
   <div class="bg-grid"></div>
 
-  <!-- Header Fijo Superior -->
   <header class="h-16 border-b border-sys-border bg-sys-base/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-50">
     <div class="flex items-center gap-4">
       <div class="flex items-center gap-3">
@@ -183,17 +180,16 @@
         </div>
       </div>
       
-      <button id="btnBack" class="hidden ml-6 text-sys-textMuted hover:text-white flex items-center gap-2 text-sm transition-colors border border-sys-border px-3 py-1.5 rounded-md bg-sys-panel hover:bg-sys-panelHover">
+      <button type="button" id="btnBack" class="hidden ml-6 text-sys-textMuted hover:text-white flex items-center gap-2 text-sm transition-colors border border-sys-border px-3 py-1.5 rounded-md bg-sys-panel hover:bg-sys-panelHover">
         <i class="fa-solid fa-arrow-left"></i> Panel Principal
       </button>
     </div>
 
-    <!-- Indicador de línea temporal actual -->
     <div class="flex items-center gap-3 bg-sys-panel/80 border border-sys-accent/30 rounded-lg px-4 py-1.5 shadow-inner">
       <i class="fa-solid fa-timeline text-sys-accent text-xs"></i>
       <span class="font-mono text-xs text-sys-textMuted">AUDITANDO:</span>
       <span id="timelineIndicator" class="font-mono text-xs text-white font-bold">HOY</span>
-      <button id="btnTodayReset" class="hidden bg-sys-accent/10 hover:bg-sys-accent/20 text-sys-accent text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-sys-accent/30 transition-all ml-1" onclick="resetToToday()">VOLVER A HOY</button>
+      <button type="button" id="btnTodayReset" class="hidden bg-sys-accent/10 hover:bg-sys-accent/20 text-sys-accent text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-sys-accent/30 transition-all ml-1" onclick="resetToToday()">VOLVER A HOY</button>
     </div>
 
     <div class="flex items-center gap-6">
@@ -205,19 +201,14 @@
     </div>
     
     <div class="flex items-center gap-4 text-sys-textMuted hidden md:flex">
-      <button class="hover:text-white transition-colors" onclick="resetData()" title="Restablecer día actual"><i class="fa-solid fa-arrows-rotate text-sm"></i></button>
+      <button type="button" class="hover:text-white transition-colors" onclick="resetData()" title="Restablecer día actual"><i class="fa-solid fa-arrows-rotate text-sm"></i></button>
     </div>
   </header>
 
-  <!-- Espacio de trabajo -->
   <main class="w-full flex-1 pb-10" id="workspace">
 
-    <!-- ========================================== -->
-    <!-- VIEW: DASHBOARD (HUB)                      -->
-    <!-- ========================================== -->
     <section id="view-dashboard" class="view-section active p-4 md:p-6 w-full max-w-[1600px] mx-auto">
       
-      <!-- Tarjetas de Navegación -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
         <div class="glass-panel clickable p-5 flex flex-col justify-between group h-36 relative overflow-hidden animate-slide-up stagger-1" onclick="navigateTo('view-training')">
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-500"></div>
@@ -276,10 +267,31 @@
         </div>
       </div>
 
-      <!-- Grid de Diseño Principal -->
+      <div class="glass-panel p-5 mb-6 flex flex-col animate-slide-up stagger-5">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+          <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-sys-accent"></i> Vector de Optimización Mensual (Historial de Tendencia)
+          </h2>
+          <div class="flex items-center gap-2 text-[11px] font-mono">
+            <span class="text-sys-textMuted">EFICIENCIA MEDIA DEL MES:</span>
+            <span id="dashMonthlyAvg" class="text-sys-accent font-bold">0%</span>
+          </div>
+        </div>
+        <div class="w-full bg-sys-base/60 border border-sys-border rounded-xl p-4 flex flex-col justify-between h-36 relative">
+          <svg id="monthlyTrendGraphDash" class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 700 120"></svg>
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none id-empty-graph-msg hidden">
+            <span class="font-mono text-[10px] text-sys-textMuted">Sin registros históricos detectados en este mes.</span>
+          </div>
+        </div>
+        <div class="flex justify-between text-[9px] font-mono text-sys-textMuted mt-2 px-1">
+          <span>INICIO DE MES</span>
+          <span>COMPORTAMIENTO METABÓLICO Y DE COMPROMISO</span>
+          <span>FIN DE MES</span>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 xl:grid-cols-12 gap-4 md:gap-6">
         
-        <!-- Bloque Izquierdo -->
         <div class="col-span-1 xl:col-span-4 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-2">
           <div class="glass-panel p-5 flex flex-col gap-4">
             <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-2">Estado del Operador</h2>
@@ -318,7 +330,6 @@
           </div>
         </div>
 
-        <!-- Bloque Central (Anillo de Consistencia) -->
         <div class="col-span-1 xl:col-span-5 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-3">
           <div class="glass-panel p-6 flex flex-col">
             <div class="flex justify-between items-center mb-6">
@@ -359,7 +370,6 @@
           </div>
         </div>
 
-        <!-- Bloque Derecho (Distribución de Macros) -->
         <div class="col-span-1 xl:col-span-3 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-4">
           <div class="glass-panel p-5">
             <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-4">Blindaje Hormonal</h2>
@@ -400,9 +410,6 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW: ENTRENAMIENTO                        -->
-    <!-- ========================================== -->
     <section id="view-training" class="view-section p-4 md:p-6 max-w-[1000px] mx-auto">
       <div class="glass-panel p-6 flex flex-col">
         <div class="flex justify-between items-start mb-6 border-b border-sys-border pb-4">
@@ -418,18 +425,14 @@
         </div>
         <div class="space-y-4" id="trainExerciseList"></div>
         <div class="mt-6 pt-4 border-t border-sys-border flex flex-wrap justify-end gap-4">
-          <button class="bg-sys-panel border border-sys-border text-white px-6 py-2 rounded font-mono text-xs hover:bg-sys-border transition-colors" onclick="saveTraining()">Guardar Parámetros de Series</button>
-          <button class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded font-mono text-xs transition-colors" onclick="completeTraining()">Marcar Rutina Completada</button>
+          <button type="button" class="bg-sys-panel border border-sys-border text-white px-6 py-2 rounded font-mono text-xs hover:bg-sys-border transition-colors" onclick="saveTraining()">Guardar Parámetros de Series</button>
+          <button type="button" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded font-mono text-xs transition-colors" onclick="completeTraining()">Marcar Rutina Completada</button>
         </div>
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW: NUTRICIÓN                            -->
-    <!-- ========================================== -->
     <section id="view-nutrition" class="view-section p-4 md:p-6 max-w-[1100px] mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Bloque Izquierdo: Inputs de macros -->
         <div class="col-span-1 glass-panel p-6 flex flex-col gap-6">
           <div>
             <h2 class="text-base font-bold font-mono text-white border-b border-sys-border pb-2 mb-4">Registro Calórico</h2>
@@ -446,20 +449,19 @@
                 <label class="text-[10px] font-mono text-sys-textMuted uppercase">Grasas (g) <span class="text-sys-warning">[Max 70g]</span></label>
                 <input type="number" id="inpFat" class="sci-input mt-1" placeholder="Ej: 15">
               </div>
-              <button class="w-full bg-sys-success/20 border border-sys-success text-sys-success py-2 rounded font-mono text-xs mt-2 hover:bg-sys-success/30 transition-all" onclick="addMacros()">Inyectar Nutrientes</button>
+              <button type="button" class="w-full bg-sys-success/20 border border-sys-success text-sys-success py-2 rounded font-mono text-xs mt-2 hover:bg-sys-success/30 transition-all" onclick="addMacros()">Inyectar Nutrientes</button>
             </div>
           </div>
           <div class="mt-auto border-t border-sys-border pt-4">
             <h3 class="text-xs font-bold font-mono text-white mb-3">Hidratación (Litros)</h3>
             <div class="flex items-center justify-between bg-sys-base p-2 rounded border border-sys-border">
-              <button class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(-0.5)"><i class="fa-solid fa-minus text-xs"></i></button>
+              <button type="button" class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(-0.5)"><i class="fa-solid fa-minus text-xs"></i></button>
               <span class="font-mono text-lg text-blue-400 font-bold" id="waterDisplay">0.0</span>
-              <button class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(0.5)"><i class="fa-solid fa-plus text-xs"></i></button>
+              <button type="button" class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(0.5)"><i class="fa-solid fa-plus text-xs"></i></button>
             </div>
           </div>
         </div>
         
-        <!-- Bloque Derecho: Barras de progreso y textos requeridos -->
         <div class="col-span-1 lg:col-span-2 glass-panel p-6 flex flex-col">
           <h2 class="text-base font-bold font-mono text-white border-b border-sys-border pb-2 mb-6">Métricas de Recomposición</h2>
           <div class="mb-6">
@@ -473,7 +475,6 @@
           </div>
 
           <div class="space-y-6">
-            <!-- Proteína -->
             <div>
               <div class="flex justify-between text-xs font-mono mb-1.5">
                 <span class="text-sys-accent font-bold">🥩 Proteína <span class="text-white ml-1">140g (560 kcal)</span></span>
@@ -485,7 +486,6 @@
               <p class="text-[10px] text-sys-textMuted font-mono">Innegociable. A 2.4g por kilo, es tu bloque constructor. Sin esta cantidad, en déficit, perderías músculo.</p>
             </div>
             
-            <!-- Grasas -->
             <div>
               <div class="flex justify-between text-xs font-mono mb-1.5">
                 <span class="text-sys-warning font-bold">🥑 Grasas <span class="text-white ml-1">70g (630 kcal)</span></span>
@@ -497,7 +497,6 @@
               <p class="text-[10px] text-sys-textMuted font-mono">Tu escudo hormonal. Mantenemos un nivel óptimo para que tu testosterona no sufra por el déficit calórico. Sigue incluyendo tus yemas de huevo y aceite de oliva.</p>
             </div>
 
-            <!-- Carbohidratos -->
             <div>
               <div class="flex justify-between text-xs font-mono mb-1.5">
                 <span class="text-purple-400 font-bold">🍚 Carbohidratos <span class="text-white ml-1">240g (960 kcal)</span></span>
@@ -513,9 +512,6 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW: HÁBITOS                              -->
-    <!-- ========================================== -->
     <section id="view-habits" class="view-section p-4 md:p-6 max-w-[800px] mx-auto">
       <div class="glass-panel p-6 flex flex-col">
         <div class="flex justify-between items-center mb-6 border-b border-sys-border pb-4">
@@ -528,18 +524,13 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW: ANALÍTICAS Y MATRIZ MENSUAL          -->
-    <!-- ========================================== -->
     <section id="view-analytics" class="view-section p-4 md:p-6 max-w-[1300px] mx-auto">
       
-      <!-- Gráfico automático de rendimiento mensual -->
       <div class="glass-panel p-5 mb-6 flex flex-col">
         <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-chart-line text-sys-accent"></i> Gráfico Automático de Optimización Mensual
+          <i class="fa-solid fa-chart-line text-sys-accent"></i> Gráfico de Diagnóstico de Consistencia
         </h2>
         <div class="w-full bg-sys-base/60 border border-sys-border rounded-xl p-4 flex flex-col justify-between h-48 relative">
-          <!-- Contenedor del SVG Dinámico para las barras -->
           <svg id="monthlyTrendGraph" class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 700 120"></svg>
           <div class="absolute inset-0 flex items-center justify-center pointer-events-none id-empty-graph-msg hidden">
             <span class="font-mono text-[10px] text-sys-textMuted">Sin registros históricos detectados en este mes.</span>
@@ -596,7 +587,6 @@
     { id: 'nonut', icon: 'fa-shield-halved', name: 'Retención', desc: 'Foco y Agresividad' }
   ];
 
-  // Base de datos de entrenamiento inyectada EXACTA al prompt
   const ROUTINES = {
     1: { 
       type: 'Push Fuerza', 
@@ -680,7 +670,6 @@
     }
   };
 
-  // Objetivos Exactos
   const GOALS = { pro: 140, car: 240, fat: 70, kcal: 2150 };
 
   let appState = {};
@@ -710,8 +699,11 @@
   }
 
   function saveData() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } 
-    catch(e) { console.warn("Storage bloqueado."); }
+    try { 
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); 
+    } catch(e) { 
+      console.error("Storage bloqueado o error al guardar.", e); 
+    }
     updateDashboard(); 
     renderAnalyticsView(); 
   }
@@ -719,8 +711,13 @@
   function loadData() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) appState = JSON.parse(saved);
-    } catch(e) { appState = {}; }
+      if (saved) {
+        appState = JSON.parse(saved);
+      }
+    } catch(e) { 
+      console.error("Error al cargar localStorage.", e);
+      appState = {}; 
+    }
     getTargetData(auditedDateStr); 
   }
 
@@ -774,7 +771,6 @@
 
   btnBack.addEventListener('click', () => navigateTo('view-dashboard'));
 
-  // Cálculo para colores de la matriz y gráfico (Persistente para el historial)
   function calculateDayScores(dataStr) {
     const dayData = appState[dataStr];
     if (!dayData) return { total: 0, trainScore: 0, dietScore: 0, habitsScore: 0 };
@@ -785,7 +781,7 @@
     let dietScore = 0;
     if(kcal > 0) {
       dietScore = Math.min((kcal / GOALS.kcal) * 100, 100);
-      if(kcal > (GOALS.kcal + 200)) dietScore = Math.max(100 - ((kcal - GOALS.kcal)/10), 40); // Penalidad por exceso calórico fuerte
+      if(kcal > (GOALS.kcal + 200)) dietScore = Math.max(100 - ((kcal - GOALS.kcal)/10), 40); 
     }
     
     let habitsCompleted = 0;
@@ -877,6 +873,10 @@
         </div>
       </div>
     `;
+    
+    // Forzar redibujado de gráficos al actualizar el dash
+    const daysInMonth = new Date(currentYearIndex, currentMonthIndex + 1, 0).getDate();
+    generateMonthlyTrendGraph(daysInMonth);
   }
 
   function renderTrainingView() {
@@ -941,7 +941,6 @@
       }
     });
     saveData();
-    alert(`Parámetros de series guardados para el día auditado (${auditedDateStr}).`);
   }
 
   window.completeTraining = function() {
@@ -977,6 +976,11 @@
     data.nutrition.pro += parseInt(document.getElementById('inpPro').value) || 0;
     data.nutrition.car += parseInt(document.getElementById('inpCar').value) || 0;
     data.nutrition.fat += parseInt(document.getElementById('inpFat').value) || 0;
+    
+    document.getElementById('inpPro').value = '';
+    document.getElementById('inpCar').value = '';
+    document.getElementById('inpFat').value = '';
+    
     saveData();
     renderNutritionView();
   }
@@ -1015,14 +1019,22 @@
     document.getElementById('habitsActiveCount').innerText = `${active}/${HITS_CONFIG.length}`;
   }
 
-  // Gráfico dinámico automatizado
+  window.toggleHabit = function(id) {
+    const data = getTargetData(auditedDateStr);
+    data.habits[id] = !data.habits[id];
+    saveData();
+    renderHabitsView();
+  }
+
   function generateMonthlyTrendGraph(daysInMonth) {
-    const svg = document.getElementById('monthlyTrendGraph');
-    const emptyMsg = document.querySelector('.id-empty-graph-msg');
-    svg.innerHTML = '';
+    const svgDash = document.getElementById('monthlyTrendGraphDash');
+    const svgAnalytic = document.getElementById('monthlyTrendGraph');
+    const emptyMsgs = document.querySelectorAll('.id-empty-graph-msg');
     
+    let htmlContent = '';
     let points = [];
     let activeRecords = 0;
+    let totalScoreSum = 0;
     
     const widthTotal = 700;
     const heightTotal = 120;
@@ -1032,10 +1044,9 @@
     
     const stepX = chartWidth / (daysInMonth - 1 || 1);
     
-    // Grid horizontal de fondo
     for(let lines = 0; lines <= 4; lines++) {
       const yL = padding + (chartHeight * (lines / 4));
-      svg.innerHTML += `<line x1="${padding}" y1="${yL}" x2="${widthTotal - padding}" y2="${yL}" stroke="rgba(26, 39, 68, 0.3)" stroke-width="1" stroke-dasharray="4 4" />`;
+      htmlContent += `<line x1="${padding}" y1="${yL}" x2="${widthTotal - padding}" y2="${yL}" stroke="rgba(26, 39, 68, 0.3)" stroke-width="1" stroke-dasharray="4 4" />`;
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
@@ -1045,7 +1056,10 @@
       let score = 0;
       if (dayData) {
         score = calculateDayScores(loopStr).total;
-        if(score > 0) activeRecords++;
+        if(score > 0) {
+          activeRecords++;
+          totalScoreSum += score;
+        }
       }
       
       const cx = padding + ((i - 1) * stepX);
@@ -1053,44 +1067,55 @@
       points.push({cx, cy, score, dayNum: i});
     }
 
-    if(activeRecords === 0) {
-      emptyMsg.classList.remove('hidden');
-      return;
-    } else {
-      emptyMsg.classList.add('hidden');
+    let avg = activeRecords > 0 ? Math.round(totalScoreSum / activeRecords) : 0;
+    const avgEl = document.getElementById('dashMonthlyAvg');
+    if(avgEl) {
+      avgEl.innerText = avg + '%';
+      if(avg >= 85) avgEl.className = "text-sys-success font-bold font-mono";
+      else if(avg > 40) avgEl.className = "text-sys-warning font-bold font-mono";
+      else avgEl.className = "text-sys-danger font-bold font-mono";
     }
 
-    // Dibujar barras sutiles de fondo por cada día
+    if(activeRecords === 0) {
+      emptyMsgs.forEach(msg => msg.classList.remove('hidden'));
+      if (svgDash) svgDash.innerHTML = '';
+      if (svgAnalytic) svgAnalytic.innerHTML = '';
+      return;
+    } else {
+      emptyMsgs.forEach(msg => msg.classList.add('hidden'));
+    }
+
     points.forEach(p => {
       let colorBar = 'rgba(26, 39, 68, 0.4)';
       if(p.score >= 85) colorBar = 'rgba(0, 255, 136, 0.15)';
       else if(p.score > 10) colorBar = 'rgba(255, 184, 0, 0.15)';
       
-      svg.innerHTML += `
+      htmlContent += `
         <rect x="${p.cx - 3}" y="${padding + chartHeight - ((p.score/100)*chartHeight)}" width="6" height="${(p.score/100)*chartHeight}" fill="${colorBar}" rx="2"/>
       `;
     });
 
-    // Línea poligonal del vector de progreso
     let polyPath = "";
     points.forEach((p, idx) => {
       polyPath += `${idx === 0 ? 'M' : 'L'} ${p.cx} ${p.cy} `;
     });
     
-    svg.innerHTML += `
+    htmlContent += `
       <path d="${polyPath}" fill="none" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 4px rgba(0,240,255,0.4));"/>
     `;
 
-    // Nodos
     points.forEach(p => {
       if(p.score > 0) {
         let nodeColor = '#ffb800';
         if(p.score >= 85) nodeColor = '#00ff88';
-        svg.innerHTML += `
+        htmlContent += `
           <circle cx="${p.cx}" cy="${p.cy}" r="3.5" fill="#050a14" stroke="${nodeColor}" stroke-width="2" />
         `;
       }
     });
+
+    if (svgDash) svgDash.innerHTML = htmlContent;
+    if (svgAnalytic) svgAnalytic.innerHTML = htmlContent;
   }
 
   function renderAnalyticsView() {
@@ -1102,12 +1127,10 @@
     const firstDayIndex = new Date(currentYearIndex, currentMonthIndex, 1).getDay(); 
     const daysInMonth = new Date(currentYearIndex, currentMonthIndex + 1, 0).getDate();
 
-    // Rellenar espacios vacíos
     for(let i=0; i<firstDayIndex; i++) {
       grid.innerHTML += `<div class="aspect-square bg-transparent opacity-0 pointer-events-none"></div>`;
     }
 
-    // Inyección de celdas dinámicas (Guardan el color histórico al consultarlas/modificarlas)
     for(let i=1; i<=daysInMonth; i++) {
       const loopDateStr = `${currentYearIndex}-${String(currentMonthIndex+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
       const dayData = appState[loopDateStr];
@@ -1147,15 +1170,17 @@
     updateDashboard();
   }
 
-  window.onload = () => {
+  // Cambio crucial para asegurar que la app y el guardado local se inicializan sin fallos.
+  document.addEventListener('DOMContentLoaded', () => {
     initTimeline();
     loadData();
     renderAllViews();
     
     setInterval(() => {
-      document.getElementById('sysClock').innerText = new Date().toLocaleTimeString('en-US', {hour12: false});
+      const clockEl = document.getElementById('sysClock');
+      if (clockEl) clockEl.innerText = new Date().toLocaleTimeString('en-US', {hour12: false});
     }, 1000);
-  };
+  });
 </script>
 </body>
 </html>
