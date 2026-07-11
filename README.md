@@ -136,8 +136,8 @@
   }
 
   .donut-chart { transform: rotate(-90deg); filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
-  .donut-bg { fill: none; stroke: rgba(26, 39, 68, 0.4); stroke-width: 8; }
-  .donut-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.2s ease-out; }
+  .donut-bg { fill: none; stroke: rgba(26, 39, 68, 0.4); stroke-width: 7; }
+  .donut-fill { fill: none; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 1.2s ease-out; }
 
   .sci-input {
     background: rgba(0,0,0,0.3); border: 1px solid #1a2744; color: #00f0ff;
@@ -337,17 +337,23 @@
               <span class="text-[10px] font-mono bg-sys-panel border border-sys-border px-3 py-1 rounded-full shadow-inner">Completado: <span id="dashTotalModules" class="text-white">0/3</span></span>
             </div>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-8 py-2">
+              
               <div class="relative w-36 h-36 flex-shrink-0 animate-float">
                 <svg viewBox="0 0 100 100" class="donut-chart w-full h-full">
-                  <circle class="donut-bg" cx="50" cy="50" r="40"></circle>
-                  <circle id="donutTraining" class="donut-fill" cx="50" cy="50" r="40" stroke="#3b82f6" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
-                  <circle id="donutDiet" class="donut-fill" cx="50" cy="50" r="40" stroke="#00ff88" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
-                  <circle id="donutHabits" class="donut-fill" cx="50" cy="50" r="40" stroke="#b026ff" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                  <circle cx="50" cy="50" r="42" class="donut-bg"></circle>
+                  <circle id="donutTraining" class="donut-fill" cx="50" cy="50" r="42" stroke="#3b82f6" stroke-dasharray="263.9" stroke-dashoffset="263.9"></circle>
+                  
+                  <circle cx="50" cy="50" r="33" class="donut-bg"></circle>
+                  <circle id="donutDiet" class="donut-fill" cx="50" cy="50" r="33" stroke="#00ff88" stroke-dasharray="207.3" stroke-dashoffset="207.3"></circle>
+                  
+                  <circle cx="50" cy="50" r="24" class="donut-bg"></circle>
+                  <circle id="donutHabits" class="donut-fill" cx="50" cy="50" r="24" stroke="#b026ff" stroke-dasharray="150.8" stroke-dashoffset="150.8"></circle>
                 </svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center bg-sys-panel/30 rounded-full m-4 border border-sys-border/50 backdrop-blur-sm">
                   <span class="font-mono text-2xl font-bold text-white drop-shadow-md" id="dashPercent">0%</span>
                 </div>
               </div>
+              
               <div class="flex flex-col gap-3 w-full sm:w-auto min-w-[150px]">
                 <div class="flex items-center justify-between text-xs bg-sys-panel/40 p-2 rounded border border-sys-border">
                   <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span class="text-sys-textMuted">Combate</span></div>
@@ -570,7 +576,8 @@
   </main>
 
 <script>
-  const STORAGE_KEY = 'superman_jarvis_v3.1_time_matrix';
+  // Cambiamos la llave para obligar al navegador a crear un registro fresco y limpio
+  const STORAGE_KEY = 'superman_jarvis_v4_stable';
   
   const baseDayData = {
     training: { completed: false, log: {} }, 
@@ -701,11 +708,10 @@
   function saveData() {
     try { 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); 
+      console.log("Datos guardados con éxito."); 
     } catch(e) { 
-      console.error("Storage bloqueado o error al guardar.", e); 
+      console.error("Storage bloqueado o error al guardar. Verifica la configuración de tu navegador.", e); 
     }
-    updateDashboard(); 
-    renderAnalyticsView(); 
   }
 
   function loadData() {
@@ -715,7 +721,7 @@
         appState = JSON.parse(saved);
       }
     } catch(e) { 
-      console.error("Error al cargar localStorage.", e);
+      console.error("Error al cargar localStorage. Empezando de cero.", e);
       appState = {}; 
     }
     getTargetData(auditedDateStr); 
@@ -803,11 +809,11 @@
     
     const scores = calculateDayScores(auditedDateStr);
 
-    const circumference = 251.2;
     setTimeout(() => {
-      document.getElementById('donutTraining').style.strokeDashoffset = circumference - (scores.trainScore / 100) * circumference;
-      document.getElementById('donutDiet').style.strokeDashoffset = circumference - (scores.dietScore / 100) * circumference;
-      document.getElementById('donutHabits').style.strokeDashoffset = circumference - (scores.habitsScore / 100) * circumference;
+      // Ajuste geométrico exacto de los anillos concéntricos
+      document.getElementById('donutTraining').style.strokeDashoffset = 263.9 - (scores.trainScore / 100) * 263.9;
+      document.getElementById('donutDiet').style.strokeDashoffset = 207.3 - (scores.dietScore / 100) * 207.3;
+      document.getElementById('donutHabits').style.strokeDashoffset = 150.8 - (scores.habitsScore / 100) * 150.8;
     }, 80);
 
     document.getElementById('dashPercent').innerText = scores.total + '%';
@@ -874,7 +880,6 @@
       </div>
     `;
     
-    // Forzar redibujado de gráficos al actualizar el dash
     const daysInMonth = new Date(currentYearIndex, currentMonthIndex + 1, 0).getDate();
     generateMonthlyTrendGraph(daysInMonth);
   }
@@ -941,6 +946,8 @@
       }
     });
     saveData();
+    renderTrainingView(); // Agregado para forzar actualización visual local
+    alert(`Parámetros de series guardados para el día auditado (${auditedDateStr}).`);
   }
 
   window.completeTraining = function() {
@@ -948,6 +955,7 @@
     data.training.completed = true;
     saveData();
     renderTrainingView();
+    updateDashboard(); // Asegura el guardado en matriz principal
   }
 
   function renderNutritionView() {
@@ -983,6 +991,7 @@
     
     saveData();
     renderNutritionView();
+    updateDashboard();
   }
 
   window.updateWater = function(amt) {
@@ -990,6 +999,7 @@
     data.nutrition.water = Math.max(0, data.nutrition.water + amt);
     saveData();
     renderNutritionView();
+    updateDashboard();
   }
 
   function renderHabitsView() {
@@ -1024,6 +1034,7 @@
     data.habits[id] = !data.habits[id];
     saveData();
     renderHabitsView();
+    updateDashboard();
   }
 
   function generateMonthlyTrendGraph(daysInMonth) {
@@ -1041,7 +1052,6 @@
     const padding = 15;
     const chartWidth = widthTotal - (padding * 2);
     const chartHeight = heightTotal - (padding * 2);
-    
     const stepX = chartWidth / (daysInMonth - 1 || 1);
     
     for(let lines = 0; lines <= 4; lines++) {
@@ -1170,7 +1180,12 @@
     updateDashboard();
   }
 
-  // Cambio crucial para asegurar que la app y el guardado local se inicializan sin fallos.
+  // Backup hiper-agresivo: si el usuario recarga la pagina con un boton o cerrando la pestaña, guardamos todo de emergencia
+  window.addEventListener('beforeunload', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+  });
+
+  // Inicialización de DOM Seguro
   document.addEventListener('DOMContentLoaded', () => {
     initTimeline();
     loadData();
