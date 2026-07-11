@@ -51,7 +51,8 @@
       radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.05), transparent 25%),
       radial-gradient(circle at 85% 30%, rgba(176, 38, 255, 0.05), transparent 25%);
     color: #e2e8f0;
-    overflow: hidden; /* Se oculta aquí, pero el scroll se maneja en el contenedor <main> */
+    /* SCROLL NATIVO LIBERADO: Eliminamos overflow: hidden */
+    overflow-x: hidden; 
     -webkit-font-smoothing: antialiased;
   }
 
@@ -67,8 +68,8 @@
     -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
   }
 
-  /* Scrollbar personalizado */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  /* Scrollbar personalizado nativo */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(26, 39, 68, 0.8); border-radius: 4px; }
   ::-webkit-scrollbar-thumb:hover { background: rgba(42, 59, 92, 1); }
@@ -167,11 +168,12 @@
   }
 </style>
 </head>
-<body class="h-screen w-screen flex flex-col font-sans">
+
+<body class="min-h-screen flex flex-col font-sans w-full relative">
   
   <div class="bg-grid"></div>
 
-  <header class="h-16 border-b border-sys-border bg-sys-base/80 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-50">
+  <header class="h-16 border-b border-sys-border bg-sys-base/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-50">
     <div class="flex items-center gap-4">
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center border border-sys-accent shadow-[0_0_10px_rgba(0,240,255,0.3)]">
@@ -184,31 +186,31 @@
       </div>
       
       <button id="btnBack" class="hidden ml-6 text-sys-textMuted hover:text-white flex items-center gap-2 text-sm transition-colors border border-sys-border px-3 py-1.5 rounded-md bg-sys-panel hover:bg-sys-panelHover">
-        <i class="fa-solid fa-arrow-left"></i> Retornar al Mainframe
+        <i class="fa-solid fa-arrow-left"></i> Retornar
       </button>
     </div>
 
     <div class="flex items-center gap-6">
       <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-900/20 border border-green-500/30">
         <div class="w-2 h-2 rounded-full bg-sys-success animate-pulse"></div>
-        <span class="font-mono text-xs text-sys-success font-medium">SISTEMA ÓPTIMO</span>
+        <span class="font-mono text-xs text-sys-success font-medium hidden sm:block">SISTEMA ÓPTIMO</span>
       </div>
       <div id="sysClock" class="font-mono text-sm text-white font-medium">--:--:--</div>
       <div id="sysDate" class="font-mono text-xs text-sys-textMuted uppercase hidden sm:block">-- --- ----</div>
     </div>
     
-    <div class="flex items-center gap-4 text-sys-textMuted hidden sm:flex">
+    <div class="flex items-center gap-4 text-sys-textMuted hidden md:flex">
       <button class="hover:text-white transition-colors" onclick="resetData()"><i class="fa-solid fa-arrows-rotate text-sm"></i></button>
       <button class="hover:text-white transition-colors"><i class="fa-regular fa-bell text-sm"></i></button>
       <button class="hover:text-white transition-colors"><i class="fa-solid fa-gear text-sm"></i></button>
     </div>
   </header>
 
-  <main class="flex-1 overflow-y-auto overflow-x-hidden relative custom-scrollbar" id="workspace">
+  <main class="w-full flex-1 pb-10" id="workspace">
 
-    <section id="view-dashboard" class="view-section active p-4 md:p-6 w-full max-w-[1600px] mx-auto h-fit min-h-full">
+    <section id="view-dashboard" class="view-section active p-4 md:p-6 w-full max-w-[1600px] mx-auto">
       
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-6 shrink-0">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
         <div class="glass-panel clickable p-5 flex flex-col justify-between group h-36 relative overflow-hidden animate-slide-up stagger-1" onclick="navigateTo('view-training')">
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-500"></div>
           <div class="flex justify-between items-start">
@@ -266,9 +268,9 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 flex-1 min-h-[500px]">
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-4 md:gap-6">
         
-        <div class="col-span-1 md:col-span-4 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-2">
+        <div class="col-span-1 xl:col-span-4 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-2">
           <div class="glass-panel p-5 flex flex-col gap-4">
             <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-2">Estado del Operador</h2>
             <div class="flex items-center gap-4">
@@ -307,13 +309,13 @@
           </div>
         </div>
 
-        <div class="col-span-1 md:col-span-5 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-3">
+        <div class="col-span-1 xl:col-span-5 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-3">
           <div class="glass-panel p-6 flex flex-col">
             <div class="flex justify-between items-center mb-8">
               <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold">Resumen Diario</h2>
               <span class="text-[10px] font-mono bg-sys-panel border border-sys-border px-3 py-1 rounded-full shadow-inner">Módulos: <span id="dashTotalModules" class="text-white">0/3</span></span>
             </div>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-12 flex-1">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-12 py-4">
               <div class="relative w-40 h-40 flex-shrink-0 animate-float">
                 <svg viewBox="0 0 100 100" class="donut-chart w-full h-full">
                   <circle class="donut-bg" cx="50" cy="50" r="40"></circle>
@@ -341,14 +343,14 @@
               </div>
             </div>
           </div>
-          <div class="glass-panel p-5 flex-1 flex flex-col relative overflow-hidden">
+          <div class="glass-panel p-5 flex-1 flex flex-col relative overflow-hidden min-h-[250px]">
             <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-bl-full pointer-events-none"></div>
             <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-4">Agenda del Sistema</h2>
-            <div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar" id="dashSchedule"></div>
+            <div class="space-y-3" id="dashSchedule"></div>
           </div>
         </div>
 
-        <div class="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-4">
+        <div class="col-span-1 xl:col-span-3 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-4">
           <div class="glass-panel p-5 relative overflow-hidden">
             <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-sys-success/10 rounded-full blur-xl pointer-events-none"></div>
             <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-5">Estado Físico</h2>
@@ -362,7 +364,7 @@
             </div>
           </div>
 
-          <div class="glass-panel p-5 flex-1 flex flex-col">
+          <div class="glass-panel p-5 flex-1 flex flex-col min-h-[220px]">
             <div class="flex justify-between items-center mb-6">
               <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold">Consumo Energía</h2>
               <span class="text-[10px] font-mono text-sys-success animate-pulse flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-sys-success"></div> Live</span>
@@ -396,8 +398,8 @@
       </div>
     </section>
 
-    <section id="view-training" class="view-section p-4 md:p-6 max-w-[1000px] mx-auto h-fit min-h-full">
-      <div class="glass-panel p-6 flex flex-col h-full">
+    <section id="view-training" class="view-section p-4 md:p-6 max-w-[1000px] mx-auto">
+      <div class="glass-panel p-6 flex flex-col">
         <div class="flex justify-between items-start mb-6 border-b border-sys-border pb-4">
           <div>
             <h2 class="text-2xl font-bold font-mono text-white flex items-center gap-3">
@@ -409,17 +411,17 @@
             <span class="font-mono text-sm bg-blue-500/20 text-blue-400 px-3 py-1 rounded border border-blue-500/30">Estado: <span id="trainStatus">Pendiente</span></span>
           </div>
         </div>
-        <div class="flex-1 space-y-4" id="trainExerciseList">
+        <div class="space-y-4" id="trainExerciseList">
           </div>
-        <div class="mt-6 pt-4 border-t border-sys-border flex justify-end gap-4">
+        <div class="mt-6 pt-4 border-t border-sys-border flex flex-wrap justify-end gap-4">
           <button class="bg-sys-panel border border-sys-border text-white px-6 py-2 rounded font-mono text-sm hover:bg-sys-border transition-colors" onclick="saveTraining()">Guardar Registro</button>
           <button class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded font-mono text-sm transition-colors" onclick="completeTraining()">Marcar Completada</button>
         </div>
       </div>
     </section>
 
-    <section id="view-nutrition" class="view-section p-4 md:p-6 max-w-[1000px] mx-auto h-fit min-h-full">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+    <section id="view-nutrition" class="view-section p-4 md:p-6 max-w-[1000px] mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="col-span-1 glass-panel p-6 flex flex-col gap-6">
           <div>
             <h2 class="text-lg font-bold font-mono text-white border-b border-sys-border pb-2 mb-4">Registro Calórico</h2>
@@ -443,13 +445,14 @@
           <div class="mt-auto border-t border-sys-border pt-4">
             <h3 class="text-sm font-bold text-white mb-3">Hidratación (Litros)</h3>
             <div class="flex items-center justify-between bg-sys-base p-2 rounded border border-sys-border">
-              <button class="text-sys-textMuted hover:text-white px-3" onclick="updateWater(-0.5)"><i class="fa-solid fa-minus"></i></button>
+              <button class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(-0.5)"><i class="fa-solid fa-minus"></i></button>
               <span class="font-mono text-xl text-blue-400 font-bold" id="waterDisplay">0.0</span>
-              <button class="text-sys-textMuted hover:text-white px-3" onclick="updateWater(0.5)"><i class="fa-solid fa-plus"></i></button>
+              <button class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(0.5)"><i class="fa-solid fa-plus"></i></button>
             </div>
             <p class="text-center text-[10px] text-sys-textMuted mt-2 font-mono">Objetivo: 3.0 L</p>
           </div>
         </div>
+        
         <div class="col-span-1 lg:col-span-2 glass-panel p-6 flex flex-col">
           <h2 class="text-lg font-bold font-mono text-white border-b border-sys-border pb-2 mb-6">Estado de Recomposición</h2>
           <div class="mb-8">
@@ -490,7 +493,7 @@
               </div>
             </div>
           </div>
-          <div class="mt-auto pt-6 border-t border-sys-border">
+          <div class="mt-auto pt-6 border-t border-sys-border mt-8">
             <p class="font-mono text-[11px] text-sys-textMuted leading-relaxed">
               <i class="fa-solid fa-triangle-exclamation text-sys-warning mr-2"></i> REGLA: Los datos no mienten. Si subes de peso sucio, corta 20g de carbohidratos. Si estancas en fuerza, suma 20g. La proteína es sagrada (125g min).
             </p>
@@ -499,21 +502,21 @@
       </div>
     </section>
 
-    <section id="view-habits" class="view-section p-4 md:p-6 max-w-[800px] mx-auto h-fit min-h-full">
-      <div class="glass-panel p-6 h-full flex flex-col">
+    <section id="view-habits" class="view-section p-4 md:p-6 max-w-[800px] mx-auto">
+      <div class="glass-panel p-6 flex flex-col">
         <div class="flex justify-between items-center mb-6 border-b border-sys-border pb-4">
           <h2 class="text-2xl font-bold font-mono text-white flex items-center gap-3">
             <i class="fa-solid fa-dna text-purple-400"></i> Protocolos Biológicos
           </h2>
-          <span class="font-mono text-sm bg-purple-500/20 text-purple-400 px-3 py-1 rounded border border-purple-500/30">Módulos Activos: <span id="habitsActiveCount">0/6</span></span>
+          <span class="font-mono text-sm bg-purple-500/20 text-purple-400 px-3 py-1 rounded border border-purple-500/30">Activos: <span id="habitsActiveCount">0/6</span></span>
         </div>
-        <div class="flex-1 space-y-3" id="habitsList">
+        <div class="space-y-3" id="habitsList">
           </div>
       </div>
     </section>
 
-    <section id="view-analytics" class="view-section p-4 md:p-6 max-w-[1200px] mx-auto h-fit min-h-full">
-      <div class="glass-panel p-6 h-full flex flex-col">
+    <section id="view-analytics" class="view-section p-4 md:p-6 max-w-[1200px] mx-auto">
+      <div class="glass-panel p-6 flex flex-col">
         <div class="flex justify-between items-center mb-6 border-b border-sys-border pb-4">
           <h2 class="text-2xl font-bold font-mono text-white flex items-center gap-3">
             <i class="fa-solid fa-chart-radar text-sys-warning"></i> Matriz Mensual
@@ -533,7 +536,7 @@
         </div>
         <div class="grid grid-cols-7 gap-2 md:gap-4 flex-1" id="calendarGrid">
           </div>
-        <div class="mt-6 flex justify-center gap-6 border-t border-sys-border pt-4">
+        <div class="mt-6 flex flex-wrap justify-center gap-6 border-t border-sys-border pt-4">
           <div class="flex items-center gap-2"><div class="w-3 h-3 bg-sys-panel border border-sys-border rounded"></div><span class="text-xs font-mono text-sys-textMuted">Vacío</span></div>
           <div class="flex items-center gap-2"><div class="w-3 h-3 bg-red-900/40 border border-red-500 rounded"></div><span class="text-xs font-mono text-sys-textMuted">Fallo</span></div>
           <div class="flex items-center gap-2"><div class="w-3 h-3 bg-sys-warning/30 border border-sys-warning rounded"></div><span class="text-xs font-mono text-sys-textMuted">Parcial</span></div>
@@ -545,10 +548,7 @@
   </main>
 
 <script>
-  /* ==========================================
-     1. SISTEMA DE DATOS Y ESTADO GLOBAL (SEGURO)
-     ========================================== */
-  const STORAGE_KEY = 'superman_jarvis_v3_safe';
+  const STORAGE_KEY = 'superman_jarvis_v3_native';
   
   const baseDayData = {
     training: { completed: false, log: {} }, 
@@ -594,11 +594,8 @@
   }
 
   function saveData() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-    } catch(e) {
-      console.warn("Storage bloqueado. Datos se mantendrán solo en memoria en esta sesión.");
-    }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } 
+    catch(e) { console.warn("Storage bloqueado."); }
     updateDashboard(); 
   }
 
@@ -606,10 +603,7 @@
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) appState = JSON.parse(saved);
-    } catch(e) {
-      console.warn("No se puede leer LocalStorage. Inicializando en blanco.");
-      appState = {};
-    }
+    } catch(e) { appState = {}; }
     getTodayData(); 
   }
 
@@ -621,19 +615,12 @@
     }
   }
 
-  /* ==========================================
-     2. NAVEGACIÓN
-     ========================================== */
   const views = ['view-dashboard', 'view-training', 'view-nutrition', 'view-habits', 'view-analytics'];
   const btnBack = document.getElementById('btnBack');
 
   window.navigateTo = function(viewId) {
-    views.forEach(v => {
-      document.getElementById(v).classList.remove('active');
-    });
-    
-    const target = document.getElementById(viewId);
-    target.classList.add('active');
+    views.forEach(v => document.getElementById(v).classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
 
     if (viewId === 'view-dashboard') {
       btnBack.classList.add('hidden');
@@ -641,15 +628,12 @@
     } else {
       btnBack.classList.remove('hidden');
     }
-    // Hacemos scroll top siempre que cambiamos de vista
-    document.getElementById('workspace').scrollTo({ top: 0, behavior: 'smooth' });
+    // Sube el scroll siempre arriba al cambiar de vista
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   btnBack.addEventListener('click', () => navigateTo('view-dashboard'));
 
-  /* ==========================================
-     3. RENDERIZADO DE DASHBOARD
-     ========================================== */
   function updateDashboard() {
     const data = getTodayData();
     const now = new Date();
@@ -691,10 +675,10 @@
 
     const cnsEl = document.getElementById('dashCNS');
     if(data.habits.sleep) {
-      cnsEl.innerText = "Nominal"; cnsEl.className = "font-mono text-sm text-sys-success";
+      cnsEl.innerText = "Nominal"; cnsEl.className = "font-mono text-sm text-sys-success font-bold";
       document.getElementById('dashSleepVal').innerText = "8+ h";
     } else {
-      cnsEl.innerText = "Deteriorado"; cnsEl.className = "font-mono text-sm text-sys-warning";
+      cnsEl.innerText = "Deteriorado"; cnsEl.className = "font-mono text-sm text-sys-warning font-bold";
       document.getElementById('dashSleepVal').innerText = "< 6h";
     }
 
@@ -743,15 +727,11 @@
     `;
   }
 
-  /* ==========================================
-     4. RENDERIZADO DE SUB-PÁGINAS
-     ========================================== */
   function renderTrainingView() {
     const data = getTodayData();
     const routine = ROUTINES[currentDate.getDay()];
     
     document.getElementById('trainTitle').innerText = routine.title;
-    
     const statusEl = document.getElementById('trainStatus');
     if(data.training.completed) {
       statusEl.innerText = "EJECUTADO";
@@ -763,7 +743,6 @@
 
     const listEl = document.getElementById('trainExerciseList');
     listEl.innerHTML = '';
-
     routine.exercises.forEach((ex, idx) => {
       let setsHtml = '';
       for(let s=1; s<=ex.sets; s++) {
@@ -817,7 +796,6 @@
     document.getElementById('inpFat').value = '';
 
     const kcal = (data.nutrition.pro * 4) + (data.nutrition.car * 4) + (data.nutrition.fat * 9);
-    
     document.getElementById('nutProNum').innerText = data.nutrition.pro;
     document.getElementById('nutCarNum').innerText = data.nutrition.car;
     document.getElementById('nutFatNum').innerText = data.nutrition.fat;
@@ -834,14 +812,9 @@
 
   window.addMacros = function() {
     const data = getTodayData();
-    const p = parseInt(document.getElementById('inpPro').value) || 0;
-    const c = parseInt(document.getElementById('inpCar').value) || 0;
-    const f = parseInt(document.getElementById('inpFat').value) || 0;
-    
-    data.nutrition.pro += p;
-    data.nutrition.car += c;
-    data.nutrition.fat += f;
-    
+    data.nutrition.pro += parseInt(document.getElementById('inpPro').value) || 0;
+    data.nutrition.car += parseInt(document.getElementById('inpCar').value) || 0;
+    data.nutrition.fat += parseInt(document.getElementById('inpFat').value) || 0;
     saveData();
     renderNutritionView();
   }
@@ -890,10 +863,8 @@
   function renderAnalyticsView() {
     const grid = document.getElementById('calendarGrid');
     grid.innerHTML = '';
-    
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
-    
     const monthNames = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
     document.getElementById('calendarMonthLabel').innerText = `${monthNames[month]} ${year}`;
 
@@ -907,7 +878,6 @@
     for(let i=1; i<=daysInMonth; i++) {
       const loopDateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
       const dayData = appState[loopDateStr];
-      
       let statusClass = "bg-sys-base border-sys-border opacity-50";
       
       if(dayData) {
@@ -915,16 +885,13 @@
         let dScore = ((dayData.nutrition.pro*4 + dayData.nutrition.car*4 + dayData.nutrition.fat*9) >= 2000) ? 1 : 0; 
         let hCount = 0; Object.values(dayData.habits).forEach(v => { if(v) hCount++; });
         let hScore = (hCount / 6) >= 0.8 ? 1 : 0;
-        
         const total = tScore + dScore + hScore;
         
         if (total === 3) statusClass = "bg-sys-success/20 border-sys-success text-sys-success shadow-[0_0_10px_rgba(0,255,136,0.2)]"; 
         else if (total > 0) statusClass = "bg-sys-warning/20 border-sys-warning text-sys-warning";
         else statusClass = "bg-red-900/40 border-red-500 text-red-500"; 
       }
-
       const isToday = loopDateStr === dateStr ? "ring-2 ring-white" : "";
-
       grid.innerHTML += `
         <div class="aspect-square rounded border flex flex-col items-center justify-center relative ${statusClass} ${isToday} transition-all hover:scale-105 cursor-pointer">
           <span class="font-mono text-sm font-bold">${i}</span>
@@ -942,13 +909,9 @@
     updateDashboard();
   }
 
-  /* ==========================================
-     5. INICIALIZACIÓN
-     ========================================== */
   window.onload = () => {
     loadData();
     renderAllViews();
-    
     setInterval(() => {
       document.getElementById('sysClock').innerText = new Date().toLocaleTimeString('en-US', {hour12: false});
     }, 1000);
