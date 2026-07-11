@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JARVIS — Proyecto Superman V3</title>
+<title>JARVIS — Proyecto Superman V3.1</title>
 
 <script>
   tailwind = {
@@ -36,8 +36,11 @@
     }
   }
 </script>
+<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
@@ -51,7 +54,6 @@
       radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.05), transparent 25%),
       radial-gradient(circle at 85% 30%, rgba(176, 38, 255, 0.05), transparent 25%);
     color: #e2e8f0;
-    /* SCROLL NATIVO LIBERADO: Eliminamos overflow: hidden */
     overflow-x: hidden; 
     -webkit-font-smoothing: antialiased;
   }
@@ -68,7 +70,6 @@
     -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
   }
 
-  /* Scrollbar personalizado nativo */
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(26, 39, 68, 0.8); border-radius: 4px; }
@@ -88,17 +89,16 @@
   .glass-panel.clickable:hover {
     border-color: rgba(0, 240, 255, 0.4);
     box-shadow: 0 15px 35px rgba(0, 240, 255, 0.15);
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-2px);
   }
 
-  /* Animaciones CSS puro */
-  .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-slide-up { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
   .animate-pulse-slow { animation: pulseSlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
   .animate-float { animation: float 6s ease-in-out infinite; }
   .animate-radar-sweep { animation: sweep 4s linear infinite; }
 
   @keyframes slideUp {
-    0% { opacity: 0; transform: translateY(30px); }
+    0% { opacity: 0; transform: translateY(20px); }
     100% { opacity: 1; transform: translateY(0); }
   }
   @keyframes customFadeIn {
@@ -115,15 +115,14 @@
   }
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    50% { transform: translateY(-6px); }
   }
 
-  .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.1s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.2s; }
 
-  /* Gráficos y radares */
   .radar-container {
     position: relative; width: 100%; aspect-ratio: 1; border-radius: 50%;
     border: 1px solid rgba(0, 240, 255, 0.2); overflow: hidden;
@@ -140,9 +139,8 @@
 
   .donut-chart { transform: rotate(-90deg); filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
   .donut-bg { fill: none; stroke: rgba(26, 39, 68, 0.4); stroke-width: 8; }
-  .donut-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+  .donut-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.2s ease-out; }
 
-  /* Formularios */
   .sci-input {
     background: rgba(0,0,0,0.3); border: 1px solid #1a2744; color: #00f0ff;
     font-family: 'JetBrains Mono', monospace; padding: 8px 12px; border-radius: 6px; width: 100%; outline: none;
@@ -160,11 +158,10 @@
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   }
 
-  /* Transición de Vistas */
   .view-section { display: none; opacity: 0; }
   .view-section.active {
     display: flex; flex-direction: column;
-    animation: customFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: customFadeIn 0.3s ease-out both;
   }
 </style>
 </head>
@@ -173,6 +170,7 @@
   
   <div class="bg-grid"></div>
 
+  <!-- Header Fijo Superior -->
   <header class="h-16 border-b border-sys-border bg-sys-base/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-50">
     <div class="flex items-center gap-4">
       <div class="flex items-center gap-3">
@@ -181,13 +179,21 @@
         </div>
         <div>
           <h1 class="font-bold tracking-widest text-sm text-white m-0 leading-tight">SUPERMAN<span class="text-sys-accent">SYS</span></h1>
-          <p class="font-mono text-[10px] text-sys-textMuted uppercase">Intelligence System v3.0</p>
+          <p class="font-mono text-[10px] text-sys-textMuted uppercase">Intelligence System v3.1</p>
         </div>
       </div>
       
       <button id="btnBack" class="hidden ml-6 text-sys-textMuted hover:text-white flex items-center gap-2 text-sm transition-colors border border-sys-border px-3 py-1.5 rounded-md bg-sys-panel hover:bg-sys-panelHover">
-        <i class="fa-solid fa-arrow-left"></i> Retornar
+        <i class="fa-solid fa-arrow-left"></i> Panel Principal
       </button>
+    </div>
+
+    <!-- Indicador de línea temporal actual -->
+    <div class="flex items-center gap-3 bg-sys-panel/80 border border-sys-accent/30 rounded-lg px-4 py-1.5 shadow-inner">
+      <i class="fa-solid fa-timeline text-sys-accent text-xs"></i>
+      <span class="font-mono text-xs text-sys-textMuted">AUDITANDO:</span>
+      <span id="timelineIndicator" class="font-mono text-xs text-white font-bold">HOY</span>
+      <button id="btnTodayReset" class="hidden bg-sys-accent/10 hover:bg-sys-accent/20 text-sys-accent text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-sys-accent/30 transition-all ml-1" onclick="resetToToday()">VOLVER A HOY</button>
     </div>
 
     <div class="flex items-center gap-6">
@@ -196,20 +202,22 @@
         <span class="font-mono text-xs text-sys-success font-medium hidden sm:block">SISTEMA ÓPTIMO</span>
       </div>
       <div id="sysClock" class="font-mono text-sm text-white font-medium">--:--:--</div>
-      <div id="sysDate" class="font-mono text-xs text-sys-textMuted uppercase hidden sm:block">-- --- ----</div>
     </div>
     
     <div class="flex items-center gap-4 text-sys-textMuted hidden md:flex">
-      <button class="hover:text-white transition-colors" onclick="resetData()"><i class="fa-solid fa-arrows-rotate text-sm"></i></button>
-      <button class="hover:text-white transition-colors"><i class="fa-regular fa-bell text-sm"></i></button>
-      <button class="hover:text-white transition-colors"><i class="fa-solid fa-gear text-sm"></i></button>
+      <button class="hover:text-white transition-colors" onclick="resetData()" title="Restablecer día actual"><i class="fa-solid fa-arrows-rotate text-sm"></i></button>
     </div>
   </header>
 
+  <!-- Espacio de trabajo -->
   <main class="w-full flex-1 pb-10" id="workspace">
 
+    <!-- ========================================== -->
+    <!-- VIEW: DASHBOARD (HUB)                      -->
+    <!-- ========================================== -->
     <section id="view-dashboard" class="view-section active p-4 md:p-6 w-full max-w-[1600px] mx-auto">
       
+      <!-- Tarjetas de Navegación -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
         <div class="glass-panel clickable p-5 flex flex-col justify-between group h-36 relative overflow-hidden animate-slide-up stagger-1" onclick="navigateTo('view-training')">
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-500"></div>
@@ -221,7 +229,7 @@
           </div>
           <div class="mt-4">
             <h3 class="text-white font-bold text-sm tracking-wide">Entrenamiento</h3>
-            <p class="text-sys-textMuted font-mono text-[10px] mt-1">PPL x2 / Fuerza & Hipertrofia</p>
+            <p class="text-sys-textMuted font-mono text-[10px] mt-1" id="dashRoutineSummary">Cargando protocolo...</p>
           </div>
         </div>
         
@@ -235,7 +243,7 @@
           </div>
           <div class="mt-4">
             <h3 class="text-white font-bold text-sm tracking-wide">Nutrición & Macros</h3>
-            <p class="text-sys-textMuted font-mono text-[10px] mt-1">2350 kcal / Recomposición</p>
+            <p class="text-sys-textMuted font-mono text-[10px] mt-1">2150 kcal / Recomposición</p>
           </div>
         </div>
 
@@ -249,7 +257,7 @@
           </div>
           <div class="mt-4">
             <h3 class="text-white font-bold text-sm tracking-wide">Protocolos T</h3>
-            <p class="text-sys-textMuted font-mono text-[10px] mt-1">Testosterona & Disciplina</p>
+            <p class="text-sys-textMuted font-mono text-[10px] mt-1">Hormonal & Disciplina</p>
           </div>
         </div>
 
@@ -257,19 +265,21 @@
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-sys-warning/10 rounded-full blur-2xl group-hover:bg-sys-warning/20 transition-all duration-500"></div>
           <div class="flex justify-between items-start">
             <div class="w-10 h-10 rounded-lg bg-sys-warning/20 flex items-center justify-center border border-sys-warning/30 group-hover:scale-110 transition-transform duration-300">
-              <i class="fa-solid fa-chart-radar text-sys-warning text-lg"></i>
+              <i class="fa-solid fa-calendar-days text-sys-warning text-lg"></i>
             </div>
             <i class="fa-solid fa-arrow-right text-sys-border group-hover:text-sys-warning transition-colors group-hover:translate-x-1 duration-300"></i>
           </div>
           <div class="mt-4">
-            <h3 class="text-white font-bold text-sm tracking-wide">Analítica Mensual</h3>
-            <p class="text-sys-textMuted font-mono text-[10px] mt-1">Tendencias de Progreso 30D</p>
+            <h3 class="text-white font-bold text-sm tracking-wide">Matriz Mensual</h3>
+            <p class="text-sys-textMuted font-mono text-[10px] mt-1">Historial e Índices Dinámicos</p>
           </div>
         </div>
       </div>
 
+      <!-- Grid de Diseño Principal -->
       <div class="grid grid-cols-1 xl:grid-cols-12 gap-4 md:gap-6">
         
+        <!-- Bloque Izquierdo -->
         <div class="col-span-1 xl:col-span-4 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-2">
           <div class="glass-panel p-5 flex flex-col gap-4">
             <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-2">Estado del Operador</h2>
@@ -279,44 +289,44 @@
                 <h3 class="font-bold text-sm tracking-wide">Superman Protocol</h3>
                 <div class="flex gap-2 text-[10px] font-mono mt-1">
                   <span class="bg-sys-success/20 text-sys-success px-2 py-0.5 rounded border border-sys-success/30">Fase 3</span>
-                  <span class="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">56.8 KG</span>
+                  <span class="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">Déficit Activo</span>
                 </div>
               </div>
             </div>
             <div class="grid grid-cols-2 gap-3 mt-2">
               <div class="bg-sys-panel/50 rounded-lg border border-sys-border p-3 transition-colors hover:bg-sys-panel">
-                <p class="text-[10px] text-sys-textMuted">Descanso Prev.</p>
-                <p class="font-mono text-white text-sm mt-1" id="dashSleepVal">-- h</p>
+                <p class="text-[10px] text-sys-textMuted">Estado CNS</p>
+                <p class="font-mono text-white text-sm mt-1" id="dashCNS">Nominal</p>
               </div>
               <div class="bg-sys-panel/50 rounded-lg border border-sys-border p-3 transition-colors hover:bg-sys-panel">
-                <p class="text-[10px] text-sys-textMuted">Día del Ciclo</p>
-                <p class="font-mono text-white text-sm mt-1" id="dashCycleDay">--</p>
+                <p class="text-[10px] text-sys-textMuted">Bloque Constructor</p>
+                <p class="font-mono text-white text-sm mt-1">140g PRO</p>
               </div>
             </div>
           </div>
 
-          <div class="glass-panel p-5 flex-1 flex flex-col items-center justify-center relative min-h-[250px] overflow-hidden">
+          <div class="glass-panel p-5 flex-1 flex flex-col items-center justify-center relative min-h-[230px] overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent to-sys-accent/5 pointer-events-none"></div>
-            <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold absolute top-5 left-5">Biometría</h2>
-            <div class="w-40 h-40 mt-6 relative animate-float">
+            <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold absolute top-5 left-5">Biometría Radar</h2>
+            <div class="w-36 h-36 mt-4 relative animate-float">
               <div class="radar-container">
                 <div class="radar-sweep animate-radar-sweep"></div>
                 <div class="absolute w-2 h-2 bg-sys-accent rounded-full top-[30%] left-[60%] shadow-[0_0_10px_#00f0ff] animate-pulse"></div>
                 <div class="absolute w-2 h-2 bg-sys-success rounded-full bottom-[40%] right-[30%] shadow-[0_0_10px_#00ff88]"></div>
               </div>
             </div>
-            <p class="font-mono text-[10px] text-sys-accent mt-6 text-center uppercase bg-sys-accent/10 px-3 py-1 rounded-full border border-sys-accent/20">Escaneando...<br><span class="text-sys-textMuted lowercase mt-1 inline-block">todo nominal</span></p>
           </div>
         </div>
 
+        <!-- Bloque Central (Anillo de Consistencia) -->
         <div class="col-span-1 xl:col-span-5 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-3">
           <div class="glass-panel p-6 flex flex-col">
-            <div class="flex justify-between items-center mb-8">
-              <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold">Resumen Diario</h2>
-              <span class="text-[10px] font-mono bg-sys-panel border border-sys-border px-3 py-1 rounded-full shadow-inner">Módulos: <span id="dashTotalModules" class="text-white">0/3</span></span>
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold">Consistencia del Día Auditado</h2>
+              <span class="text-[10px] font-mono bg-sys-panel border border-sys-border px-3 py-1 rounded-full shadow-inner">Completado: <span id="dashTotalModules" class="text-white">0/3</span></span>
             </div>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-12 py-4">
-              <div class="relative w-40 h-40 flex-shrink-0 animate-float">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-8 py-2">
+              <div class="relative w-36 h-36 flex-shrink-0 animate-float">
                 <svg viewBox="0 0 100 100" class="donut-chart w-full h-full">
                   <circle class="donut-bg" cx="50" cy="50" r="40"></circle>
                   <circle id="donutTraining" class="donut-fill" cx="50" cy="50" r="40" stroke="#3b82f6" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
@@ -324,71 +334,63 @@
                   <circle id="donutHabits" class="donut-fill" cx="50" cy="50" r="40" stroke="#b026ff" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
                 </svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center bg-sys-panel/30 rounded-full m-4 border border-sys-border/50 backdrop-blur-sm">
-                  <span class="font-mono text-3xl font-bold text-white drop-shadow-md" id="dashPercent">0%</span>
+                  <span class="font-mono text-2xl font-bold text-white drop-shadow-md" id="dashPercent">0%</span>
                 </div>
               </div>
-              <div class="flex flex-col gap-4 w-full sm:w-auto min-w-[140px]">
-                <div class="flex items-center justify-between text-xs bg-sys-panel/40 p-2 rounded border border-sys-border hover:bg-sys-panel transition-colors">
-                  <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div><span class="text-sys-textMuted">Entreno</span></div>
+              <div class="flex flex-col gap-3 w-full sm:w-auto min-w-[150px]">
+                <div class="flex items-center justify-between text-xs bg-sys-panel/40 p-2 rounded border border-sys-border">
+                  <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span class="text-sys-textMuted">Combate</span></div>
                   <span class="font-mono text-white font-bold" id="legTraining">0%</span>
                 </div>
-                <div class="flex items-center justify-between text-xs bg-sys-panel/40 p-2 rounded border border-sys-border hover:bg-sys-panel transition-colors">
-                  <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-sys-success shadow-[0_0_8px_rgba(0,255,136,0.6)]"></div><span class="text-sys-textMuted">Nutrición</span></div>
+                <div class="flex items-center justify-between text-xs bg-sys-panel/40 p-2 rounded border border-sys-border">
+                  <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-sys-success"></div><span class="text-sys-textMuted">Nutrición</span></div>
                   <span class="font-mono text-white font-bold" id="legDiet">0%</span>
                 </div>
-                <div class="flex items-center justify-between text-xs bg-sys-panel/40 p-2 rounded border border-sys-border hover:bg-sys-panel transition-colors">
-                  <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(176,38,255,0.6)]"></div><span class="text-sys-textMuted">Hábitos</span></div>
+                <div class="flex items-center justify-between text-xs bg-sys-panel/40 p-2 rounded border border-sys-border">
+                  <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-purple-500"></div><span class="text-sys-textMuted">Hábitos</span></div>
                   <span class="font-mono text-white font-bold" id="legHabits">0%</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="glass-panel p-5 flex-1 flex flex-col relative overflow-hidden min-h-[250px]">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-bl-full pointer-events-none"></div>
-            <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-4">Agenda del Sistema</h2>
-            <div class="space-y-3" id="dashSchedule"></div>
+          <div class="glass-panel p-5 flex-1 flex flex-col min-h-[200px]">
+            <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-4">Agenda Operativa</h2>
+            <div class="space-y-2.5" id="dashSchedule"></div>
           </div>
         </div>
 
+        <!-- Bloque Derecho (Distribución de Macros) -->
         <div class="col-span-1 xl:col-span-3 flex flex-col gap-4 md:gap-6 animate-slide-up stagger-4">
-          <div class="glass-panel p-5 relative overflow-hidden">
-            <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-sys-success/10 rounded-full blur-xl pointer-events-none"></div>
-            <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-5">Estado Físico</h2>
-            <div class="flex items-center justify-between bg-sys-panel/60 border border-sys-border rounded-lg p-3 mb-3 hover:border-sys-success/30 transition-colors">
-              <span class="text-xs text-sys-textMuted">Testosterona Est.</span>
-              <span class="font-mono text-sm text-sys-success font-bold flex items-center gap-2"><i class="fa-solid fa-arrow-trend-up text-[10px]"></i> Óptimo</span>
-            </div>
-            <div class="flex items-center justify-between bg-sys-panel/60 border border-sys-border rounded-lg p-3 hover:border-sys-accent/30 transition-colors">
-              <span class="text-xs text-sys-textMuted">Fatiga SNC</span>
-              <span class="font-mono text-sm text-sys-accent font-bold" id="dashCNS">Nominal</span>
+          <div class="glass-panel p-5">
+            <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-4">Blindaje Hormonal</h2>
+            <div class="bg-sys-panel/60 border border-sys-border rounded-lg p-3 flex justify-between items-center">
+              <span class="text-xs text-sys-textMuted">Grasas Mínimas</span>
+              <span class="font-mono text-xs text-sys-warning font-bold">70g Innegociables</span>
             </div>
           </div>
 
           <div class="glass-panel p-5 flex-1 flex flex-col min-h-[220px]">
-            <div class="flex justify-between items-center mb-6">
-              <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold">Consumo Energía</h2>
-              <span class="text-[10px] font-mono text-sys-success animate-pulse flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-sys-success"></div> Live</span>
-            </div>
+            <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-6">Inyección de Macronutrientes</h2>
             <div class="flex justify-between items-end gap-2 h-full pb-2">
-              <div class="flex flex-col items-center gap-3 w-full group">
-                <span class="font-mono text-[10px] text-sys-textMuted group-hover:text-sys-accent transition-colors">PRO</span>
-                <div class="relative w-14 h-14 transition-transform group-hover:scale-110">
-                  <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90 filter drop-shadow-[0_0_4px_rgba(0,240,255,0.3)]"><circle class="donut-bg" cx="18" cy="18" r="15" stroke-width="3"></circle><circle id="miniPro" class="donut-fill" cx="18" cy="18" r="15" stroke="#00f0ff" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle></svg>
-                  <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] font-bold text-white" id="lblPro">0%</span>
+              <div class="flex flex-col items-center gap-2 w-full group">
+                <span class="font-mono text-[10px] text-sys-accent font-bold">PRO (140g)</span>
+                <div class="relative w-14 h-14">
+                  <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90"><circle class="donut-bg" cx="18" cy="18" r="15" stroke-width="3"></circle><circle id="miniPro" class="donut-fill" cx="18" cy="18" r="15" stroke="#00f0ff" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle></svg>
+                  <span class="absolute inset-0 flex items-center justify-center font-mono text-[9px] font-bold text-white" id="lblPro">0%</span>
                 </div>
               </div>
-              <div class="flex flex-col items-center gap-3 w-full group">
-                <span class="font-mono text-[10px] text-sys-textMuted group-hover:text-purple-400 transition-colors">CAR</span>
-                <div class="relative w-14 h-14 transition-transform group-hover:scale-110">
-                  <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90 filter drop-shadow-[0_0_4px_rgba(176,38,255,0.3)]"><circle class="donut-bg" cx="18" cy="18" r="15" stroke-width="3"></circle><circle id="miniCar" class="donut-fill" cx="18" cy="18" r="15" stroke="#b026ff" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle></svg>
-                  <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] font-bold text-white" id="lblCar">0%</span>
+              <div class="flex flex-col items-center gap-2 w-full group">
+                <span class="font-mono text-[10px] text-purple-400 font-bold">CAR (240g)</span>
+                <div class="relative w-14 h-14">
+                  <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90"><circle class="donut-bg" cx="18" cy="18" r="15" stroke-width="3"></circle><circle id="miniCar" class="donut-fill" cx="18" cy="18" r="15" stroke="#b026ff" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle></svg>
+                  <span class="absolute inset-0 flex items-center justify-center font-mono text-[9px] font-bold text-white" id="lblCar">0%</span>
                 </div>
               </div>
-              <div class="flex flex-col items-center gap-3 w-full group">
-                <span class="font-mono text-[10px] text-sys-textMuted group-hover:text-sys-warning transition-colors">GRA</span>
-                <div class="relative w-14 h-14 transition-transform group-hover:scale-110">
-                  <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90 filter drop-shadow-[0_0_4px_rgba(255,184,0,0.3)]"><circle class="donut-bg" cx="18" cy="18" r="15" stroke-width="3"></circle><circle id="miniFat" class="donut-fill" cx="18" cy="18" r="15" stroke="#ffb800" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle></svg>
-                  <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] font-bold text-white" id="lblFat">0%</span>
+              <div class="flex flex-col items-center gap-2 w-full group">
+                <span class="font-mono text-[10px] text-sys-warning font-bold">GRA (70g)</span>
+                <div class="relative w-14 h-14">
+                  <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90"><circle class="donut-bg" cx="18" cy="18" r="15" stroke-width="3"></circle><circle id="miniFat" class="donut-fill" cx="18" cy="18" r="15" stroke="#ffb800" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle></svg>
+                  <span class="absolute inset-0 flex items-center justify-center font-mono text-[9px] font-bold text-white" id="lblFat">0%</span>
                 </div>
               </div>
             </div>
@@ -398,149 +400,178 @@
       </div>
     </section>
 
+    <!-- ========================================== -->
+    <!-- VIEW: ENTRENAMIENTO                        -->
+    <!-- ========================================== -->
     <section id="view-training" class="view-section p-4 md:p-6 max-w-[1000px] mx-auto">
       <div class="glass-panel p-6 flex flex-col">
         <div class="flex justify-between items-start mb-6 border-b border-sys-border pb-4">
           <div>
-            <h2 class="text-2xl font-bold font-mono text-white flex items-center gap-3">
+            <h2 class="text-xl font-bold font-mono text-white flex items-center gap-3" id="trainMainHeading">
               <i class="fa-solid fa-dumbbell text-blue-400"></i> Módulo de Combate
             </h2>
-            <p class="text-sys-textMuted text-sm mt-1" id="trainTitle">Día de Empuje (Fuerza)</p>
+            <p class="text-sys-textMuted text-xs mt-1.5 font-mono" id="trainSubDesc">Cargando meta de volumen...</p>
           </div>
           <div class="text-right">
-            <span class="font-mono text-sm bg-blue-500/20 text-blue-400 px-3 py-1 rounded border border-blue-500/30">Estado: <span id="trainStatus">Pendiente</span></span>
+            <span class="font-mono text-xs bg-blue-500/20 text-blue-400 px-3 py-1 rounded border border-blue-500/30">Estado: <span id="trainStatus">Pendiente</span></span>
           </div>
         </div>
-        <div class="space-y-4" id="trainExerciseList">
-          </div>
+        <div class="space-y-4" id="trainExerciseList"></div>
         <div class="mt-6 pt-4 border-t border-sys-border flex flex-wrap justify-end gap-4">
-          <button class="bg-sys-panel border border-sys-border text-white px-6 py-2 rounded font-mono text-sm hover:bg-sys-border transition-colors" onclick="saveTraining()">Guardar Registro</button>
-          <button class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded font-mono text-sm transition-colors" onclick="completeTraining()">Marcar Completada</button>
+          <button class="bg-sys-panel border border-sys-border text-white px-6 py-2 rounded font-mono text-xs hover:bg-sys-border transition-colors" onclick="saveTraining()">Guardar Parámetros de Series</button>
+          <button class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded font-mono text-xs transition-colors" onclick="completeTraining()">Marcar Rutina Completada</button>
         </div>
       </div>
     </section>
 
-    <section id="view-nutrition" class="view-section p-4 md:p-6 max-w-[1000px] mx-auto">
+    <!-- ========================================== -->
+    <!-- VIEW: NUTRICIÓN                            -->
+    <!-- ========================================== -->
+    <section id="view-nutrition" class="view-section p-4 md:p-6 max-w-[1100px] mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Bloque Izquierdo: Inputs de macros -->
         <div class="col-span-1 glass-panel p-6 flex flex-col gap-6">
           <div>
-            <h2 class="text-lg font-bold font-mono text-white border-b border-sys-border pb-2 mb-4">Registro Calórico</h2>
-            <p class="text-xs text-sys-textMuted mb-4">Añade los macros ingeridos en esta ingesta. El sistema acumulará el total diario.</p>
+            <h2 class="text-base font-bold font-mono text-white border-b border-sys-border pb-2 mb-4">Registro Calórico</h2>
             <div class="space-y-3">
               <div>
-                <label class="text-[10px] font-mono text-sys-textMuted uppercase">Proteínas (g)</label>
-                <input type="number" id="inpPro" class="sci-input" placeholder="Ej: 30">
+                <label class="text-[10px] font-mono text-sys-textMuted uppercase">Proteínas (g) <span class="text-sys-accent">[Max 140g]</span></label>
+                <input type="number" id="inpPro" class="sci-input mt-1" placeholder="Ej: 35">
               </div>
               <div>
-                <label class="text-[10px] font-mono text-sys-textMuted uppercase">Carbohidratos (g)</label>
-                <input type="number" id="inpCar" class="sci-input" placeholder="Ej: 50">
+                <label class="text-[10px] font-mono text-sys-textMuted uppercase">Carbohidratos (g) <span class="text-purple-400">[Max 240g]</span></label>
+                <input type="number" id="inpCar" class="sci-input mt-1" placeholder="Ej: 60">
               </div>
               <div>
-                <label class="text-[10px] font-mono text-sys-textMuted uppercase">Grasas (g)</label>
-                <input type="number" id="inpFat" class="sci-input" placeholder="Ej: 15">
+                <label class="text-[10px] font-mono text-sys-textMuted uppercase">Grasas (g) <span class="text-sys-warning">[Max 70g]</span></label>
+                <input type="number" id="inpFat" class="sci-input mt-1" placeholder="Ej: 15">
               </div>
-              <button class="w-full bg-sys-success/20 border border-sys-success text-sys-success py-2 rounded font-mono text-sm mt-2 hover:bg-sys-success/30 transition-all" onclick="addMacros()">Inyectar Datos</button>
+              <button class="w-full bg-sys-success/20 border border-sys-success text-sys-success py-2 rounded font-mono text-xs mt-2 hover:bg-sys-success/30 transition-all" onclick="addMacros()">Inyectar Nutrientes</button>
             </div>
           </div>
           <div class="mt-auto border-t border-sys-border pt-4">
-            <h3 class="text-sm font-bold text-white mb-3">Hidratación (Litros)</h3>
+            <h3 class="text-xs font-bold font-mono text-white mb-3">Hidratación (Litros)</h3>
             <div class="flex items-center justify-between bg-sys-base p-2 rounded border border-sys-border">
-              <button class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(-0.5)"><i class="fa-solid fa-minus"></i></button>
-              <span class="font-mono text-xl text-blue-400 font-bold" id="waterDisplay">0.0</span>
-              <button class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(0.5)"><i class="fa-solid fa-plus"></i></button>
+              <button class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(-0.5)"><i class="fa-solid fa-minus text-xs"></i></button>
+              <span class="font-mono text-lg text-blue-400 font-bold" id="waterDisplay">0.0</span>
+              <button class="text-sys-textMuted hover:text-white px-3 py-1" onclick="updateWater(0.5)"><i class="fa-solid fa-plus text-xs"></i></button>
             </div>
-            <p class="text-center text-[10px] text-sys-textMuted mt-2 font-mono">Objetivo: 3.0 L</p>
           </div>
         </div>
         
+        <!-- Bloque Derecho: Barras de progreso y textos requeridos -->
         <div class="col-span-1 lg:col-span-2 glass-panel p-6 flex flex-col">
-          <h2 class="text-lg font-bold font-mono text-white border-b border-sys-border pb-2 mb-6">Estado de Recomposición</h2>
-          <div class="mb-8">
-            <div class="flex justify-between text-sm font-mono mb-2">
-              <span class="text-sys-textMuted">Energía (Kcal)</span>
-              <span class="text-white"><span id="nutKcalNum">0</span> / 2350</span>
+          <h2 class="text-base font-bold font-mono text-white border-b border-sys-border pb-2 mb-6">Métricas de Recomposición</h2>
+          <div class="mb-6">
+            <div class="flex justify-between text-xs font-mono mb-2">
+              <span class="text-sys-textMuted">Energía Oxidativa Total (Kcal)</span>
+              <span class="text-white"><span id="nutKcalNum">0</span> / 2150 Kcal</span>
             </div>
-            <div class="w-full h-3 bg-sys-base rounded-full overflow-hidden border border-sys-border">
-              <div id="nutKcalBar" class="h-full bg-gradient-to-r from-sys-accent to-blue-500 rounded-full transition-all duration-700" style="width: 0%;"></div>
+            <div class="w-full h-2.5 bg-sys-base rounded-full overflow-hidden border border-sys-border">
+              <div id="nutKcalBar" class="h-full bg-gradient-to-r from-sys-accent to-blue-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
             </div>
           </div>
+
           <div class="space-y-6">
+            <!-- Proteína -->
             <div>
-              <div class="flex justify-between text-sm font-mono mb-2">
-                <span class="text-sys-accent">Proteína <span class="text-xs text-sys-textMuted ml-2">~ Síntesis Muscular</span></span>
-                <span class="text-white"><span id="nutProNum">0</span> / 125g</span>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <span class="text-sys-accent font-bold">🥩 Proteína <span class="text-white ml-1">140g (560 kcal)</span></span>
+                <span class="text-white"><span id="nutProNum">0</span> / 140g</span>
               </div>
-              <div class="w-full h-2 bg-sys-base rounded-full overflow-hidden">
-                <div id="nutProBar" class="h-full bg-sys-accent transition-all duration-700" style="width: 0%;"></div>
+              <div class="w-full h-1.5 bg-sys-base rounded-full overflow-hidden mb-2">
+                <div id="nutProBar" class="h-full bg-sys-accent transition-all duration-500" style="width: 0%;"></div>
               </div>
+              <p class="text-[10px] text-sys-textMuted font-mono">Innegociable. A 2.4g por kilo, es tu bloque constructor. Sin esta cantidad, en déficit, perderías músculo.</p>
             </div>
+            
+            <!-- Grasas -->
             <div>
-              <div class="flex justify-between text-sm font-mono mb-2">
-                <span class="text-purple-400">Carbohidratos <span class="text-xs text-sys-textMuted ml-2">~ Glucógeno & Rendimiento</span></span>
-                <span class="text-white"><span id="nutCarNum">0</span> / 305g</span>
-              </div>
-              <div class="w-full h-2 bg-sys-base rounded-full overflow-hidden">
-                <div id="nutCarBar" class="h-full bg-purple-400 transition-all duration-700" style="width: 0%;"></div>
-              </div>
-            </div>
-            <div>
-              <div class="flex justify-between text-sm font-mono mb-2">
-                <span class="text-sys-warning">Grasas <span class="text-xs text-sys-textMuted ml-2">~ Blindaje Hormonal (T)</span></span>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <span class="text-sys-warning font-bold">🥑 Grasas <span class="text-white ml-1">70g (630 kcal)</span></span>
                 <span class="text-white"><span id="nutFatNum">0</span> / 70g</span>
               </div>
-              <div class="w-full h-2 bg-sys-base rounded-full overflow-hidden">
-                <div id="nutFatBar" class="h-full bg-sys-warning transition-all duration-700" style="width: 0%;"></div>
+              <div class="w-full h-1.5 bg-sys-base rounded-full overflow-hidden mb-2">
+                <div id="nutFatBar" class="h-full bg-sys-warning transition-all duration-500" style="width: 0%;"></div>
               </div>
+              <p class="text-[10px] text-sys-textMuted font-mono">Tu escudo hormonal. Mantenemos un nivel óptimo para que tu testosterona no sufra por el déficit calórico. Sigue incluyendo tus yemas de huevo y aceite de oliva.</p>
             </div>
-          </div>
-          <div class="mt-auto pt-6 border-t border-sys-border mt-8">
-            <p class="font-mono text-[11px] text-sys-textMuted leading-relaxed">
-              <i class="fa-solid fa-triangle-exclamation text-sys-warning mr-2"></i> REGLA: Los datos no mienten. Si subes de peso sucio, corta 20g de carbohidratos. Si estancas en fuerza, suma 20g. La proteína es sagrada (125g min).
-            </p>
+
+            <!-- Carbohidratos -->
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <span class="text-purple-400 font-bold">🍚 Carbohidratos <span class="text-white ml-1">240g (960 kcal)</span></span>
+                <span class="text-white"><span id="nutCarNum">0</span> / 240g</span>
+              </div>
+              <div class="w-full h-1.5 bg-sys-base rounded-full overflow-hidden mb-2">
+                <div id="nutCarBar" class="h-full bg-purple-400 transition-all duration-500" style="width: 0%;"></div>
+              </div>
+              <p class="text-[10px] text-sys-textMuted font-mono">El ajuste maestro. Recortado estratégicamente. Tienes la energía exacta para rendir en esos días de estrés metabólico y tensión mecánica, pero al no sobrar nada, tu cuerpo tendrá que oxidar grasa adiposa para sobrevivir al resto del día.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- ========================================== -->
+    <!-- VIEW: HÁBITOS                              -->
+    <!-- ========================================== -->
     <section id="view-habits" class="view-section p-4 md:p-6 max-w-[800px] mx-auto">
       <div class="glass-panel p-6 flex flex-col">
         <div class="flex justify-between items-center mb-6 border-b border-sys-border pb-4">
-          <h2 class="text-2xl font-bold font-mono text-white flex items-center gap-3">
+          <h2 class="text-xl font-bold font-mono text-white flex items-center gap-3">
             <i class="fa-solid fa-dna text-purple-400"></i> Protocolos Biológicos
           </h2>
-          <span class="font-mono text-sm bg-purple-500/20 text-purple-400 px-3 py-1 rounded border border-purple-500/30">Activos: <span id="habitsActiveCount">0/6</span></span>
+          <span class="font-mono text-xs bg-purple-500/20 text-purple-400 px-3 py-1 rounded border border-purple-500/30">Cómputo: <span id="habitsActiveCount">0/6</span></span>
         </div>
-        <div class="space-y-3" id="habitsList">
-          </div>
+        <div class="space-y-3" id="habitsList"></div>
       </div>
     </section>
 
-    <section id="view-analytics" class="view-section p-4 md:p-6 max-w-[1200px] mx-auto">
+    <!-- ========================================== -->
+    <!-- VIEW: ANALÍTICAS Y MATRIZ MENSUAL          -->
+    <!-- ========================================== -->
+    <section id="view-analytics" class="view-section p-4 md:p-6 max-w-[1300px] mx-auto">
+      
+      <!-- Gráfico automático de rendimiento mensual -->
+      <div class="glass-panel p-5 mb-6 flex flex-col">
+        <h2 class="text-xs uppercase tracking-widest text-sys-textMuted font-semibold mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-chart-line text-sys-accent"></i> Gráfico Automático de Optimización Mensual
+        </h2>
+        <div class="w-full bg-sys-base/60 border border-sys-border rounded-xl p-4 flex flex-col justify-between h-48 relative">
+          <!-- Contenedor del SVG Dinámico para las barras -->
+          <svg id="monthlyTrendGraph" class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 700 120"></svg>
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none id-empty-graph-msg hidden">
+            <span class="font-mono text-[10px] text-sys-textMuted">Sin registros históricos detectados en este mes.</span>
+          </div>
+        </div>
+        <div class="flex justify-between text-[9px] font-mono text-sys-textMuted mt-2 px-1">
+          <span>INICIO DE MES</span>
+          <span>TENDENCIA DE CONSISTENCIA (%)</span>
+          <span>FIN DE MES</span>
+        </div>
+      </div>
+
       <div class="glass-panel p-6 flex flex-col">
         <div class="flex justify-between items-center mb-6 border-b border-sys-border pb-4">
-          <h2 class="text-2xl font-bold font-mono text-white flex items-center gap-3">
-            <i class="fa-solid fa-chart-radar text-sys-warning"></i> Matriz Mensual
+          <h2 class="text-xl font-bold font-mono text-white flex items-center gap-3">
+            <i class="fa-solid fa-calendar-days text-sys-warning"></i> Matriz Temporal Mensual
           </h2>
-          <div class="flex gap-4 items-center">
-            <span class="text-sys-textMuted font-mono text-sm" id="calendarMonthLabel">JULIO 2026</span>
-          </div>
+          <span class="text-xs font-mono text-sys-warning bg-sys-warning/10 border border-sys-warning/20 px-3 py-1 rounded" id="calendarMonthLabel">MES 2026</span>
         </div>
-        <div class="grid grid-cols-7 gap-2 md:gap-4 mb-4" id="calendarHeader">
-          <div class="text-center font-mono text-xs text-sys-textMuted py-2">DOM</div>
-          <div class="text-center font-mono text-xs text-sys-textMuted py-2">LUN</div>
-          <div class="text-center font-mono text-xs text-sys-textMuted py-2">MAR</div>
-          <div class="text-center font-mono text-xs text-sys-textMuted py-2">MIE</div>
-          <div class="text-center font-mono text-xs text-sys-textMuted py-2">JUE</div>
-          <div class="text-center font-mono text-xs text-sys-textMuted py-2">VIE</div>
-          <div class="text-center font-mono text-xs text-sys-textMuted py-2">SAB</div>
+        
+        <p class="text-xs text-sys-textMuted font-mono mb-4"><i class="fa-solid fa-mouse-pointer mr-1 text-sys-accent"></i> Haz clic en cualquier celda para viajar en el tiempo. Podrás ver, registrar y guardar los datos únicos de ese día; manteniendo el color histórico y sin que nada se quite o reemplace accidentalmente.</p>
+        
+        <div class="grid grid-cols-7 gap-2 md:gap-3 mb-2 text-center font-mono text-[11px] text-sys-textMuted" id="calendarHeader">
+          <div>DOM</div><div>LUN</div><div>MAR</div><div>MIE</div><div>JUE</div><div>VIE</div><div>SAB</div>
         </div>
-        <div class="grid grid-cols-7 gap-2 md:gap-4 flex-1" id="calendarGrid">
-          </div>
-        <div class="mt-6 flex flex-wrap justify-center gap-6 border-t border-sys-border pt-4">
-          <div class="flex items-center gap-2"><div class="w-3 h-3 bg-sys-panel border border-sys-border rounded"></div><span class="text-xs font-mono text-sys-textMuted">Vacío</span></div>
-          <div class="flex items-center gap-2"><div class="w-3 h-3 bg-red-900/40 border border-red-500 rounded"></div><span class="text-xs font-mono text-sys-textMuted">Fallo</span></div>
-          <div class="flex items-center gap-2"><div class="w-3 h-3 bg-sys-warning/30 border border-sys-warning rounded"></div><span class="text-xs font-mono text-sys-textMuted">Parcial</span></div>
-          <div class="flex items-center gap-2"><div class="w-3 h-3 bg-sys-success/30 border border-sys-success rounded"></div><span class="text-xs font-mono text-sys-textMuted">Óptimo</span></div>
+        <div class="grid grid-cols-7 gap-2 md:gap-3 flex-1" id="calendarGrid"></div>
+        
+        <div class="mt-6 flex flex-wrap justify-center gap-5 border-t border-sys-border pt-4">
+          <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 bg-sys-panel border border-sys-border rounded"></div><span class="text-[10px] font-mono text-sys-textMuted">Sin Datos</span></div>
+          <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 bg-red-950 border border-red-500 rounded"></div><span class="text-[10px] font-mono text-sys-textMuted">Fallo Módulos</span></div>
+          <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 bg-yellow-950 border border-sys-warning rounded"></div><span class="text-[10px] font-mono text-sys-textMuted">Rendimiento Parcial</span></div>
+          <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 bg-green-950 border border-sys-success rounded"></div><span class="text-[10px] font-mono text-sys-textMuted">Optimización Total</span></div>
         </div>
       </div>
     </section>
@@ -548,7 +579,7 @@
   </main>
 
 <script>
-  const STORAGE_KEY = 'superman_jarvis_v3_native';
+  const STORAGE_KEY = 'superman_jarvis_v3.1_time_matrix';
   
   const baseDayData = {
     training: { completed: false, log: {} }, 
@@ -565,38 +596,124 @@
     { id: 'nonut', icon: 'fa-shield-halved', name: 'Retención', desc: 'Foco y Agresividad' }
   ];
 
-  const ROUTINES = [
-    { type: 'Rest', title: 'Recuperación Activa', exercises: [{name: 'Caminata 40m (Zona 2)', sets: 1, reps: '40m'}] },
-    { type: 'Push', title: 'Empuje (Fuerza)', exercises: [{name: 'Press Militar', sets: 3, reps: '6-10'}, {name: 'Press Inclinado', sets: 3, reps: '6-8'}, {name: 'Fondos Lastrados', sets:3, reps:'8-12'}] },
-    { type: 'Pull', title: 'Tracción (Fuerza)', exercises: [{name: 'Dominadas Lastradas', sets: 3, reps: '6-10'}, {name: 'Remo Barra', sets: 3, reps: '6-8'}, {name: 'Curl Martillo', sets:3, reps:'8-12'}] },
-    { type: 'Legs', title: 'Pierna (Estructural)', exercises: [{name: 'Sentadilla Hack', sets: 4, reps: '6-8'}, {name: 'RDL', sets: 3, reps: '6-8'}, {name: 'Gemelos Pie', sets:4, reps:'10-12'}] },
-    { type: 'Push', title: 'Empuje (Metabólico)', exercises: [{name: 'Press Mancuernas 30°', sets: 4, reps: '12-15'}, {name: 'Elevaciones Laterales', sets: 4, reps: '12-15'}] },
-    { type: 'Pull', title: 'Tracción (Metabólico)', exercises: [{name: 'Remo Polea Baja', sets: 4, reps: '12-15'}, {name: 'Face Pull', sets: 3, reps: '12-15'}] },
-    { type: 'Legs', title: 'Pierna (Metabólica)', exercises: [{name: 'Prensa', sets: 4, reps: '12-15'}, {name: 'Curl Isquios Sentado', sets: 4, reps: '12-15'}] }
-  ];
+  // Base de datos de entrenamiento inyectada EXACTA al prompt
+  const ROUTINES = {
+    1: { 
+      type: 'Push Fuerza', 
+      title: '🟢 Lunes — Empuje Fuerza', 
+      desc: 'Tensión Mecánica Alta. Cargas pesadas axiales. Aquí construimos la densidad.',
+      exercises: [
+        {name: 'Press Inclinado con Mancuernas a 30°', sets: 3, reps: '6–8', desc: 'RIR 1–2 | Descanso 180s'},
+        {name: 'Press Plano con Mancuernas', sets: 2, reps: '6–8', desc: 'RIR 1–2 | Descanso 180s (Agrupado aquí para aprovechar fuerza estabilizadora intacta)'},
+        {name: 'Elevaciones Laterales en Polea Baja', sets: 3, reps: '8–10', desc: 'RIR 1 | Descanso 90s'},
+        {name: 'Extensiones de Tríceps sobre la Cabeza', sets: 3, reps: '6–8', desc: 'RIR 1 | Descanso 120s'},
+        {name: 'Flexión de Cuello con Disco', sets: 3, reps: '15–20', desc: 'RIR 2 | Descanso 90s'}
+      ]
+    },
+    2: { 
+      type: 'Pull Fuerza', 
+      title: '🟢 Martes — Tracción Fuerza', 
+      desc: 'Estabilidad Externa y Densidad. Día pesado de espalda. Añadimos trabajo de deltoides posterior para completar las 3 cabezas del hombro.',
+      exercises: [
+        {name: 'Dominadas (Lastradas si es posible)', sets: 3, reps: '6–8', desc: 'RIR 1 | Descanso 150s'},
+        {name: 'Jalón al Pecho Agarre Neutro/Estrecho', sets: 3, reps: '6–8', desc: 'RIR 1 | Descanso 150s'},
+        {name: 'Remo con Barra o en Máquina', sets: 2, reps: '6–8', desc: 'RIR 1 | Descanso 150s'},
+        {name: 'Face Pull o Pájaros con Mancuernas', sets: 3, reps: '10–12', desc: 'RIR 1 | Descanso 90s (Clave para la cabeza posterior)'},
+        {name: 'Curl de Bíceps en Banco Inclinado 45°', sets: 3, reps: '6–8', desc: 'RIR 1 | Descanso 120s'},
+        {name: 'Paseo del Granjero (Farmer\'s Walk)', sets: 3, reps: '40 metros', desc: 'RIR Fallo (agarre) | Descanso 120s'}
+      ]
+    },
+    3: { 
+      type: 'Pierna Estructural', 
+      title: '🟢 Miércoles — Pierna Estructural', 
+      desc: 'Estímulo Axial. Máxima testosterona. Añadimos extensiones para asegurar un estímulo completo del cuádriceps.',
+      exercises: [
+        {name: 'Sentadilla Hack o Prensa de Piernas', sets: 4, reps: '6–8', desc: 'RIR 1 | Descanso 180–240s'},
+        {name: 'Peso Muerto Rumano (RDL) con Barra', sets: 3, reps: '6–8', desc: 'RIR 1–2 | Descanso 180s'},
+        {name: 'Extensiones de Cuádriceps en Máquina', sets: 3, reps: '10–12', desc: 'RIR 1 | Descanso 120s (Detalle para redondear)'},
+        {name: 'Elevación de Gemelos de Pie en Máquina', sets: 4, reps: '10–12', desc: 'RIR 0 | Descanso 120s'}
+      ]
+    },
+    4: { 
+      type: 'Push Metabólico', 
+      title: '🔴 Jueves — Empuje Metabólico', 
+      desc: 'Oclusión y Cell Swelling. Intacto. Tu prioridad manda: pre-fatiga de hombro brutal antes de los presses.',
+      exercises: [
+        {name: 'Elevaciones Laterales en Polea Baja', sets: 4, reps: '12–15', desc: 'RIR 0 (Fallo) | Descanso 60s'},
+        {name: 'Press Inclinado con Mancuernas a 30°', sets: 4, reps: '12–15', desc: 'RIR 0 (Fallo) | Descanso 90s'},
+        {name: 'Extensiones de Tríceps sobre la Cabeza', sets: 3, reps: '12–15', desc: 'RIR 0 (Fallo) | Descanso 90s'},
+        {name: 'Flexión de Cuello con Disco', sets: 3, reps: '15–20', desc: 'RIR 2 | Descanso 90s'},
+        {name: 'Press Plano con Mancuernas', sets: 2, reps: '12–15', desc: 'RIR 0 (Fallo) | Descanso 90s'}
+      ]
+    },
+    5: { 
+      type: 'Pull Metabólico', 
+      title: '🔴 Viernes — Tracción Metabólica', 
+      desc: 'Bombeo Localizado. Volumen altísimo. Ajusté los RIR iniciales para que no frías tu Sistema Nervioso Central antes de acabar.',
+      exercises: [
+        {name: 'Remo en Máquina', sets: 3, reps: '12–15', desc: 'RIR 1 | Descanso 90s'},
+        {name: 'Dominadas', sets: 3, reps: 'Al fallo técnico', desc: 'RIR 1 | Descanso 90s'},
+        {name: 'Jalón al Pecho Agarre Neutro/Estrecho', sets: 2, reps: '12–15', desc: 'RIR 1 | Descanso 90s'},
+        {name: 'Vuelos Posteriores en Máquina (Pec Deck Invertido)', sets: 3, reps: '15–20', desc: 'RIR 0 (Fallo) | Descanso 60s (Toque 3D)'},
+        {name: 'Remo con Mancuerna apoyado en Banco', sets: 2, reps: '12–15', desc: 'RIR 1 | Descanso 90s'},
+        {name: 'Curl Martillo en banco 45°', sets: 3, reps: '12–15', desc: 'RIR 0 (Fallo) | Descanso 90s'}
+      ]
+    },
+    6: { 
+      type: 'Pierna Metabólica', 
+      title: '🔴 Sábado — Pierna Metabólica', 
+      desc: 'Aislamiento Seguro. Cero carga axial lumbar, pero añadimos zancadas para destruir por completo las piernas de forma segura.',
+      exercises: [
+        {name: 'Sentadilla Hack o Prensa de Piernas', sets: 4, reps: '12–15', desc: 'RIR 1 | Descanso 120s'},
+        {name: 'Zancadas (Lunges) con Mancuernas', sets: 3, reps: '12-15 por pierna', desc: 'RIR 1 | Descanso 120s (Hipertrofia glúteo y cuádriceps)'},
+        {name: 'Curl de Isquios Sentado en Máquina', sets: 4, reps: '12–15', desc: 'RIR 0 (Fallo) | Descanso 90s'},
+        {name: 'Elevación de Gemelos de Pie en Máquina', sets: 4, reps: '15–20', desc: 'RIR 0 (Fallo) | Descanso 90s'}
+      ]
+    },
+    0: { 
+      type: 'Recup. Activa', 
+      title: '🔵 Domingo — Recuperación Activa', 
+      desc: 'Aclaramiento de lactato. Obligatorio para sobrevivir a esta semana.',
+      exercises: [
+        {name: 'Caminata rápida en Zona 2 + Movilidad', sets: 1, reps: '40 min', desc: 'RPE < 4 | Descanso —'}
+      ]
+    }
+  };
+
+  // Objetivos Exactos
+  const GOALS = { pro: 140, car: 240, fat: 70, kcal: 2150 };
 
   let appState = {};
-  let currentDate = new Date();
-  
+  let todayRealStr = "";
+  let auditedDateStr = ""; 
+  let currentMonthIndex = new Date().getMonth();
+  let currentYearIndex = new Date().getFullYear();
+
   function formatDate(d) {
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, '0');
     const day = String(d.getDate()).padStart(2, '0');
     return `${y}-${m}-${day}`;
   }
-  let dateStr = formatDate(currentDate);
 
-  function getTodayData() {
-    if (!appState[dateStr]) {
-      appState[dateStr] = JSON.parse(JSON.stringify(baseDayData));
+  function initTimeline() {
+    const now = new Date();
+    todayRealStr = formatDate(now);
+    auditedDateStr = todayRealStr; 
+  }
+
+  function getTargetData(dateString) {
+    if (!appState[dateString]) {
+      appState[dateString] = JSON.parse(JSON.stringify(baseDayData));
     }
-    return appState[dateStr];
+    return appState[dateString];
   }
 
   function saveData() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } 
     catch(e) { console.warn("Storage bloqueado."); }
     updateDashboard(); 
+    renderAnalyticsView(); 
   }
 
   function loadData() {
@@ -604,12 +721,36 @@
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) appState = JSON.parse(saved);
     } catch(e) { appState = {}; }
-    getTodayData(); 
+    getTargetData(auditedDateStr); 
+  }
+
+  window.resetToToday = function() {
+    auditedDateStr = todayRealStr;
+    const now = new Date();
+    currentMonthIndex = now.getMonth();
+    currentYearIndex = now.getFullYear();
+    document.getElementById('btnTodayReset').classList.add('hidden');
+    document.getElementById('timelineIndicator').innerText = "HOY";
+    renderAllViews();
+  }
+
+  window.selectCalendarDay = function(targetStr) {
+    auditedDateStr = targetStr;
+    if(auditedDateStr === todayRealStr) {
+      document.getElementById('timelineIndicator').innerText = "HOY";
+      document.getElementById('btnTodayReset').classList.add('hidden');
+    } else {
+      const parsed = new Date(targetStr + "T00:00:00");
+      document.getElementById('timelineIndicator').innerText = parsed.toLocaleDateString('es-ES', {day:'numeric', month:'short'}).toUpperCase();
+      document.getElementById('btnTodayReset').classList.remove('hidden');
+    }
+    navigateTo('view-dashboard');
+    renderAllViews();
   }
 
   window.resetData = function() {
-    if(confirm("¿Restablecer métricas de hoy?")) {
-      appState[dateStr] = JSON.parse(JSON.stringify(baseDayData));
+    if(confirm(`¿Estás seguro que deseas RESTABLECER y vaciar las métricas del día seleccionado (${auditedDateStr})?`)) {
+      appState[auditedDateStr] = JSON.parse(JSON.stringify(baseDayData));
       saveData();
       renderAllViews();
     }
@@ -628,140 +769,158 @@
     } else {
       btnBack.classList.remove('hidden');
     }
-    // Sube el scroll siempre arriba al cambiar de vista
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   btnBack.addEventListener('click', () => navigateTo('view-dashboard'));
 
-  function updateDashboard() {
-    const data = getTodayData();
-    const now = new Date();
+  // Cálculo para colores de la matriz y gráfico (Persistente para el historial)
+  function calculateDayScores(dataStr) {
+    const dayData = appState[dataStr];
+    if (!dayData) return { total: 0, trainScore: 0, dietScore: 0, habitsScore: 0 };
     
-    document.getElementById('sysClock').innerText = now.toLocaleTimeString('en-US', {hour12: false});
-    document.getElementById('sysDate').innerText = now.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
+    let trainScore = dayData.training.completed ? 100 : 0;
+    const kcal = (dayData.nutrition.pro * 4) + (dayData.nutrition.car * 4) + (dayData.nutrition.fat * 9);
     
-    const routine = ROUTINES[now.getDay()];
-    document.getElementById('dashCycleDay').innerText = routine.type;
-
-    let trainScore = data.training.completed ? 100 : 0;
-    const kcal = (data.nutrition.pro * 4) + (data.nutrition.car * 4) + (data.nutrition.fat * 9);
-    let dietScore = Math.min((kcal / 2350) * 100, 100);
-    if(kcal > 2500) dietScore = Math.max(100 - ((kcal - 2500)/20), 50); 
+    let dietScore = 0;
+    if(kcal > 0) {
+      dietScore = Math.min((kcal / GOALS.kcal) * 100, 100);
+      if(kcal > (GOALS.kcal + 200)) dietScore = Math.max(100 - ((kcal - GOALS.kcal)/10), 40); // Penalidad por exceso calórico fuerte
+    }
     
     let habitsCompleted = 0;
-    Object.values(data.habits).forEach(v => { if(v) habitsCompleted++; });
+    Object.values(dayData.habits).forEach(v => { if(v) habitsCompleted++; });
     let habitsScore = (habitsCompleted / HITS_CONFIG.length) * 100;
+    
+    return {
+      total: Math.round((trainScore + dietScore + habitsScore) / 3),
+      trainScore, dietScore, habitsScore, kcal
+    };
+  }
+
+  function updateDashboard() {
+    const data = getTargetData(auditedDateStr);
+    const dateObj = new Date(auditedDateStr + "T00:00:00");
+    
+    const routine = ROUTINES[dateObj.getDay()];
+    document.getElementById('dashRoutineSummary').innerText = routine.type + " / " + routine.exercises.length + " Ejercicios";
+    
+    const scores = calculateDayScores(auditedDateStr);
 
     const circumference = 251.2;
     setTimeout(() => {
-      document.getElementById('donutTraining').style.strokeDashoffset = circumference - (trainScore / 100) * circumference;
-      document.getElementById('donutDiet').style.strokeDashoffset = circumference - (dietScore / 100) * circumference;
-      document.getElementById('donutHabits').style.strokeDashoffset = circumference - (habitsScore / 100) * circumference;
-    }, 100);
+      document.getElementById('donutTraining').style.strokeDashoffset = circumference - (scores.trainScore / 100) * circumference;
+      document.getElementById('donutDiet').style.strokeDashoffset = circumference - (scores.dietScore / 100) * circumference;
+      document.getElementById('donutHabits').style.strokeDashoffset = circumference - (scores.habitsScore / 100) * circumference;
+    }, 80);
 
-    const totalPercent = Math.round((trainScore + dietScore + habitsScore) / 3);
-    document.getElementById('dashPercent').innerText = totalPercent + '%';
-    
-    document.getElementById('legTraining').innerText = Math.round(trainScore) + '%';
-    document.getElementById('legDiet').innerText = Math.round(dietScore) + '%';
-    document.getElementById('legHabits').innerText = Math.round(habitsScore) + '%';
+    document.getElementById('dashPercent').innerText = scores.total + '%';
+    document.getElementById('legTraining').innerText = Math.round(scores.trainScore) + '%';
+    document.getElementById('legDiet').innerText = Math.round(scores.dietScore) + '%';
+    document.getElementById('legHabits').innerText = Math.round(scores.habitsScore) + '%';
     
     let mods = 0;
-    if(trainScore===100) mods++;
-    if(dietScore>=90) mods++;
-    if(habitsScore>=80) mods++;
+    if(scores.trainScore === 100) mods++;
+    if(scores.dietScore >= 85) mods++;
+    if(scores.habitsScore >= 80) mods++;
     document.getElementById('dashTotalModules').innerText = `${mods}/3`;
 
     const cnsEl = document.getElementById('dashCNS');
     if(data.habits.sleep) {
-      cnsEl.innerText = "Nominal"; cnsEl.className = "font-mono text-sm text-sys-success font-bold";
-      document.getElementById('dashSleepVal').innerText = "8+ h";
+      cnsEl.innerText = "Nominal"; cnsEl.className = "font-mono text-xs text-sys-success font-bold";
     } else {
-      cnsEl.innerText = "Deteriorado"; cnsEl.className = "font-mono text-sm text-sys-warning font-bold";
-      document.getElementById('dashSleepVal').innerText = "< 6h";
+      cnsEl.innerText = "Deteriorado"; cnsEl.className = "font-mono text-xs text-sys-warning font-bold";
     }
 
-    const pPerc = Math.min((data.nutrition.pro / 125) * 100, 100);
-    const cPerc = Math.min((data.nutrition.car / 305) * 100, 100);
-    const fPerc = Math.min((data.nutrition.fat / 70) * 100, 100);
+    const pPerc = Math.min((data.nutrition.pro / GOALS.pro) * 100, 100);
+    const cPerc = Math.min((data.nutrition.car / GOALS.car) * 100, 100);
+    const fPerc = Math.min((data.nutrition.fat / GOALS.fat) * 100, 100);
     
     setTimeout(() => {
       document.getElementById('miniPro').style.strokeDashoffset = 94.2 - (pPerc/100)*94.2;
       document.getElementById('miniCar').style.strokeDashoffset = 94.2 - (cPerc/100)*94.2;
       document.getElementById('miniFat').style.strokeDashoffset = 94.2 - (fPerc/100)*94.2;
-    }, 100);
+    }, 80);
     document.getElementById('lblPro').innerText = Math.round(pPerc)+'%';
     document.getElementById('lblCar').innerText = Math.round(cPerc)+'%';
     document.getElementById('lblFat').innerText = Math.round(fPerc)+'%';
 
+    let habitsCount = 0; Object.values(data.habits).forEach(v => { if(v) habitsCount++; });
+
     const sched = document.getElementById('dashSchedule');
     sched.innerHTML = `
-      <div class="flex items-center gap-4 bg-sys-panel/50 border border-sys-border rounded-lg p-3 hover:bg-sys-panel transition-all hover:-translate-y-0.5">
-        <div class="w-8 h-8 rounded-full ${data.training.completed ? 'bg-sys-success/20 text-sys-success border border-sys-success/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'} flex items-center justify-center shrink-0">
-          <i class="fa-solid fa-dumbbell"></i>
+      <div class="flex items-center gap-3 bg-sys-panel/50 border border-sys-border rounded-lg p-2.5">
+        <div class="w-7 h-7 rounded-full ${data.training.completed ? 'bg-sys-success/20 text-sys-success border border-sys-success/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'} flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-dumbbell text-xs"></i>
         </div>
         <div class="text-xs flex-1">
           <p class="font-bold text-white">${routine.title}</p>
-          <p class="text-sys-textMuted font-mono text-[10px] mt-0.5">${data.training.completed ? 'Completado' : 'Pendiente'}</p>
+          <p class="text-sys-textMuted font-mono text-[10px] mt-0.5">${data.training.completed ? 'Completado' : 'Pendiente o Sin Marcar'}</p>
         </div>
       </div>
-      <div class="flex items-center gap-4 bg-sys-panel/50 border border-sys-border rounded-lg p-3 hover:bg-sys-panel transition-all hover:-translate-y-0.5">
-        <div class="w-8 h-8 rounded-full ${data.nutrition.water >= 3 ? 'bg-sys-success/20 text-sys-success border border-sys-success/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'} flex items-center justify-center shrink-0">
-          <i class="fa-solid fa-droplet"></i>
+      <div class="flex items-center gap-3 bg-sys-panel/50 border border-sys-border rounded-lg p-2.5">
+        <div class="w-7 h-7 rounded-full ${data.nutrition.water >= 3 ? 'bg-sys-success/20 text-sys-success border border-sys-success/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'} flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-droplet text-xs"></i>
         </div>
         <div class="text-xs flex-1">
           <p class="font-bold text-white">Hidratación</p>
-          <p class="text-sys-textMuted font-mono text-[10px] mt-0.5">${data.nutrition.water.toFixed(1)} / 3.0 Lts</p>
+          <p class="text-sys-textMuted font-mono text-[10px] mt-0.5">${data.nutrition.water.toFixed(1)} / 3.0 Litros</p>
         </div>
       </div>
-      <div class="flex items-center gap-4 bg-sys-panel/50 border border-sys-border rounded-lg p-3 hover:bg-sys-panel transition-all hover:-translate-y-0.5">
-        <div class="w-8 h-8 rounded-full ${habitsCompleted >= 5 ? 'bg-sys-success/20 text-sys-success border border-sys-success/30' : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'} flex items-center justify-center shrink-0">
-          <i class="fa-solid fa-bolt"></i>
+      <div class="flex items-center gap-3 bg-sys-panel/50 border border-sys-border rounded-lg p-2.5">
+        <div class="w-7 h-7 rounded-full ${habitsCount >= 5 ? 'bg-sys-success/20 text-sys-success border border-sys-success/30' : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'} flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-bolt text-xs"></i>
         </div>
         <div class="text-xs flex-1">
           <p class="font-bold text-white">Hábitos</p>
-          <p class="text-sys-textMuted font-mono text-[10px] mt-0.5">${habitsCompleted} de ${HITS_CONFIG.length} verificados</p>
+          <p class="text-sys-textMuted font-mono text-[10px] mt-0.5">${habitsCount} de ${HITS_CONFIG.length} asimilados</p>
         </div>
       </div>
     `;
   }
 
   function renderTrainingView() {
-    const data = getTodayData();
-    const routine = ROUTINES[currentDate.getDay()];
+    const data = getTargetData(auditedDateStr);
+    const dateObj = new Date(auditedDateStr + "T00:00:00");
+    const routine = ROUTINES[dateObj.getDay()];
     
-    document.getElementById('trainTitle').innerText = routine.title;
+    document.getElementById('trainMainHeading').innerHTML = `<i class="fa-solid fa-dumbbell text-blue-400"></i> ${routine.title}`;
+    document.getElementById('trainSubDesc').innerText = routine.desc;
+    
     const statusEl = document.getElementById('trainStatus');
     if(data.training.completed) {
       statusEl.innerText = "EJECUTADO";
-      statusEl.parentElement.className = "font-mono text-sm bg-sys-success/20 text-sys-success px-3 py-1 rounded border border-sys-success/30";
+      statusEl.parentElement.className = "font-mono text-xs bg-sys-success/20 text-sys-success px-3 py-1 rounded border border-sys-success/30";
     } else {
       statusEl.innerText = "PENDIENTE";
-      statusEl.parentElement.className = "font-mono text-sm bg-blue-500/20 text-blue-400 px-3 py-1 rounded border border-blue-500/30";
+      statusEl.parentElement.className = "font-mono text-xs bg-blue-500/20 text-blue-400 px-3 py-1 rounded border border-blue-500/30";
     }
 
     const listEl = document.getElementById('trainExerciseList');
     listEl.innerHTML = '';
+    
     routine.exercises.forEach((ex, idx) => {
       let setsHtml = '';
       for(let s=1; s<=ex.sets; s++) {
         const logVal = data.training.log[`${idx}_s${s}`] || '';
         setsHtml += `
-          <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-mono text-sys-textMuted w-16">Serie ${s}</span>
-            <input type="number" id="ex_${idx}_s${s}_w" class="sci-input py-1 text-xs w-20" placeholder="Kg" value="${logVal ? logVal.split('-')[0] : ''}">
-            <input type="number" id="ex_${idx}_s${s}_r" class="sci-input py-1 text-xs w-20" placeholder="Reps" value="${logVal ? logVal.split('-')[1] : ''}">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-[11px] font-mono text-sys-textMuted w-16">Serie ${s}</span>
+            <input type="number" id="ex_${idx}_s${s}_w" class="sci-input py-1 text-xs w-24" placeholder="Carga (Kg)" value="${logVal ? logVal.split('-')[0] : ''}">
+            <input type="number" id="ex_${idx}_s${s}_r" class="sci-input py-1 text-xs w-24" placeholder="Reps" value="${logVal ? logVal.split('-')[1] : ''}">
           </div>
         `;
       }
       listEl.innerHTML += `
-        <div class="bg-sys-base border border-sys-border rounded p-4">
-          <div class="flex justify-between items-center border-b border-sys-border/50 pb-2 mb-3">
-            <h3 class="font-bold text-sm text-white">${ex.name}</h3>
-            <span class="font-mono text-[10px] text-sys-textMuted bg-sys-panel px-2 py-0.5 rounded border border-sys-border">${ex.sets}x${ex.reps}</span>
+        <div class="bg-sys-base border border-sys-border rounded-xl p-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-sys-border/50 pb-2 mb-3 gap-1">
+            <div>
+              <h3 class="font-bold text-sm text-white">${ex.name}</h3>
+              <p class="text-[10px] font-mono text-sys-accent mt-0.5">${ex.desc}</p>
+            </div>
+            <span class="font-mono text-[10px] text-sys-textMuted bg-sys-panel px-2 py-0.5 rounded border border-sys-border self-start sm:self-center">${ex.sets} Series x ${ex.reps}</span>
           </div>
-          <div class="pl-2 border-l border-sys-border/50">
+          <div class="pl-2 border-l border-sys-border/40">
             ${setsHtml}
           </div>
         </div>
@@ -770,8 +929,10 @@
   }
 
   window.saveTraining = function() {
-    const routine = ROUTINES[currentDate.getDay()];
-    const data = getTodayData();
+    const dateObj = new Date(auditedDateStr + "T00:00:00");
+    const routine = ROUTINES[dateObj.getDay()];
+    const data = getTargetData(auditedDateStr);
+    
     routine.exercises.forEach((ex, idx) => {
       for(let s=1; s<=ex.sets; s++) {
         const w = document.getElementById(`ex_${idx}_s${s}_w`).value;
@@ -780,17 +941,18 @@
       }
     });
     saveData();
+    alert(`Parámetros de series guardados para el día auditado (${auditedDateStr}).`);
   }
 
   window.completeTraining = function() {
-    const data = getTodayData();
+    const data = getTargetData(auditedDateStr);
     data.training.completed = true;
     saveData();
     renderTrainingView();
   }
 
   function renderNutritionView() {
-    const data = getTodayData();
+    const data = getTargetData(auditedDateStr);
     document.getElementById('inpPro').value = '';
     document.getElementById('inpCar').value = '';
     document.getElementById('inpFat').value = '';
@@ -803,15 +965,15 @@
     document.getElementById('waterDisplay').innerText = data.nutrition.water.toFixed(1);
 
     setTimeout(() => {
-      document.getElementById('nutProBar').style.width = Math.min((data.nutrition.pro / 125)*100, 100) + '%';
-      document.getElementById('nutCarBar').style.width = Math.min((data.nutrition.car / 305)*100, 100) + '%';
-      document.getElementById('nutFatBar').style.width = Math.min((data.nutrition.fat / 70)*100, 100) + '%';
-      document.getElementById('nutKcalBar').style.width = Math.min((kcal / 2350)*100, 100) + '%';
+      document.getElementById('nutProBar').style.width = Math.min((data.nutrition.pro / GOALS.pro)*100, 100) + '%';
+      document.getElementById('nutCarBar').style.width = Math.min((data.nutrition.car / GOALS.car)*100, 100) + '%';
+      document.getElementById('nutFatBar').style.width = Math.min((data.nutrition.fat / GOALS.fat)*100, 100) + '%';
+      document.getElementById('nutKcalBar').style.width = Math.min((kcal / GOALS.kcal)*100, 100) + '%';
     }, 50);
   }
 
   window.addMacros = function() {
-    const data = getTodayData();
+    const data = getTargetData(auditedDateStr);
     data.nutrition.pro += parseInt(document.getElementById('inpPro').value) || 0;
     data.nutrition.car += parseInt(document.getElementById('inpCar').value) || 0;
     data.nutrition.fat += parseInt(document.getElementById('inpFat').value) || 0;
@@ -820,14 +982,14 @@
   }
 
   window.updateWater = function(amt) {
-    const data = getTodayData();
+    const data = getTargetData(auditedDateStr);
     data.nutrition.water = Math.max(0, data.nutrition.water + amt);
     saveData();
     renderNutritionView();
   }
 
   function renderHabitsView() {
-    const data = getTodayData();
+    const data = getTargetData(auditedDateStr);
     const listEl = document.getElementById('habitsList');
     listEl.innerHTML = '';
     
@@ -836,14 +998,14 @@
       const isChecked = data.habits[h.id];
       if(isChecked) active++;
       listEl.innerHTML += `
-        <div class="bg-sys-base border ${isChecked ? 'border-sys-success/50' : 'border-sys-border'} rounded p-4 flex items-center justify-between transition-colors">
+        <div class="bg-sys-base border ${isChecked ? 'border-sys-success/40' : 'border-sys-border'} rounded-xl p-4 flex items-center justify-between">
           <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-sys-panel flex items-center justify-center border border-sys-border">
-              <i class="fa-solid ${h.icon} ${isChecked ? 'text-sys-success' : 'text-sys-textMuted'} text-lg transition-colors"></i>
+            <div class="w-9 h-9 rounded-full bg-sys-panel flex items-center justify-center border border-sys-border">
+              <i class="fa-solid ${h.icon} ${isChecked ? 'text-sys-success' : 'text-sys-textMuted'} text-base"></i>
             </div>
             <div>
-              <h3 class="font-bold text-sm text-white">${h.name}</h3>
-              <p class="text-[10px] font-mono text-sys-textMuted uppercase">${h.desc}</p>
+              <h3 class="font-bold text-xs text-white">${h.name}</h3>
+              <p class="text-[9px] font-mono text-sys-textMuted uppercase">${h.desc}</p>
             </div>
           </div>
           <input type="checkbox" class="sci-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleHabit('${h.id}')">
@@ -853,52 +1015,128 @@
     document.getElementById('habitsActiveCount').innerText = `${active}/${HITS_CONFIG.length}`;
   }
 
-  window.toggleHabit = function(id) {
-    const data = getTodayData();
-    data.habits[id] = !data.habits[id];
-    saveData();
-    renderHabitsView();
+  // Gráfico dinámico automatizado
+  function generateMonthlyTrendGraph(daysInMonth) {
+    const svg = document.getElementById('monthlyTrendGraph');
+    const emptyMsg = document.querySelector('.id-empty-graph-msg');
+    svg.innerHTML = '';
+    
+    let points = [];
+    let activeRecords = 0;
+    
+    const widthTotal = 700;
+    const heightTotal = 120;
+    const padding = 15;
+    const chartWidth = widthTotal - (padding * 2);
+    const chartHeight = heightTotal - (padding * 2);
+    
+    const stepX = chartWidth / (daysInMonth - 1 || 1);
+    
+    // Grid horizontal de fondo
+    for(let lines = 0; lines <= 4; lines++) {
+      const yL = padding + (chartHeight * (lines / 4));
+      svg.innerHTML += `<line x1="${padding}" y1="${yL}" x2="${widthTotal - padding}" y2="${yL}" stroke="rgba(26, 39, 68, 0.3)" stroke-width="1" stroke-dasharray="4 4" />`;
+    }
+
+    for (let i = 1; i <= daysInMonth; i++) {
+      const loopStr = `${currentYearIndex}-${String(currentMonthIndex + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+      const dayData = appState[loopStr];
+      
+      let score = 0;
+      if (dayData) {
+        score = calculateDayScores(loopStr).total;
+        if(score > 0) activeRecords++;
+      }
+      
+      const cx = padding + ((i - 1) * stepX);
+      const cy = padding + chartHeight - ((score / 100) * chartHeight);
+      points.push({cx, cy, score, dayNum: i});
+    }
+
+    if(activeRecords === 0) {
+      emptyMsg.classList.remove('hidden');
+      return;
+    } else {
+      emptyMsg.classList.add('hidden');
+    }
+
+    // Dibujar barras sutiles de fondo por cada día
+    points.forEach(p => {
+      let colorBar = 'rgba(26, 39, 68, 0.4)';
+      if(p.score >= 85) colorBar = 'rgba(0, 255, 136, 0.15)';
+      else if(p.score > 10) colorBar = 'rgba(255, 184, 0, 0.15)';
+      
+      svg.innerHTML += `
+        <rect x="${p.cx - 3}" y="${padding + chartHeight - ((p.score/100)*chartHeight)}" width="6" height="${(p.score/100)*chartHeight}" fill="${colorBar}" rx="2"/>
+      `;
+    });
+
+    // Línea poligonal del vector de progreso
+    let polyPath = "";
+    points.forEach((p, idx) => {
+      polyPath += `${idx === 0 ? 'M' : 'L'} ${p.cx} ${p.cy} `;
+    });
+    
+    svg.innerHTML += `
+      <path d="${polyPath}" fill="none" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 4px rgba(0,240,255,0.4));"/>
+    `;
+
+    // Nodos
+    points.forEach(p => {
+      if(p.score > 0) {
+        let nodeColor = '#ffb800';
+        if(p.score >= 85) nodeColor = '#00ff88';
+        svg.innerHTML += `
+          <circle cx="${p.cx}" cy="${p.cy}" r="3.5" fill="#050a14" stroke="${nodeColor}" stroke-width="2" />
+        `;
+      }
+    });
   }
 
   function renderAnalyticsView() {
     const grid = document.getElementById('calendarGrid');
     grid.innerHTML = '';
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
     const monthNames = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
-    document.getElementById('calendarMonthLabel').innerText = `${monthNames[month]} ${year}`;
+    document.getElementById('calendarMonthLabel').innerText = `${monthNames[currentMonthIndex]} ${currentYearIndex}`;
 
-    const firstDay = new Date(year, month, 1).getDay(); 
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDayIndex = new Date(currentYearIndex, currentMonthIndex, 1).getDay(); 
+    const daysInMonth = new Date(currentYearIndex, currentMonthIndex + 1, 0).getDate();
 
-    for(let i=0; i<firstDay; i++) {
-      grid.innerHTML += `<div class="aspect-square bg-transparent rounded border border-transparent"></div>`;
+    // Rellenar espacios vacíos
+    for(let i=0; i<firstDayIndex; i++) {
+      grid.innerHTML += `<div class="aspect-square bg-transparent opacity-0 pointer-events-none"></div>`;
     }
 
+    // Inyección de celdas dinámicas (Guardan el color histórico al consultarlas/modificarlas)
     for(let i=1; i<=daysInMonth; i++) {
-      const loopDateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+      const loopDateStr = `${currentYearIndex}-${String(currentMonthIndex+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
       const dayData = appState[loopDateStr];
-      let statusClass = "bg-sys-base border-sys-border opacity-50";
+      
+      let colorMetricsClass = "bg-sys-panel/40 border-sys-border text-sys-textMuted hover:border-sys-borderLight";
       
       if(dayData) {
-        let tScore = dayData.training.completed ? 1 : 0;
-        let dScore = ((dayData.nutrition.pro*4 + dayData.nutrition.car*4 + dayData.nutrition.fat*9) >= 2000) ? 1 : 0; 
-        let hCount = 0; Object.values(dayData.habits).forEach(v => { if(v) hCount++; });
-        let hScore = (hCount / 6) >= 0.8 ? 1 : 0;
-        const total = tScore + dScore + hScore;
-        
-        if (total === 3) statusClass = "bg-sys-success/20 border-sys-success text-sys-success shadow-[0_0_10px_rgba(0,255,136,0.2)]"; 
-        else if (total > 0) statusClass = "bg-sys-warning/20 border-sys-warning text-sys-warning";
-        else statusClass = "bg-red-900/40 border-red-500 text-red-500"; 
+        const scores = calculateDayScores(loopDateStr);
+        if (scores.total >= 85) {
+          colorMetricsClass = "bg-green-950/70 border-sys-success text-sys-success font-bold shadow-[0_0_12px_rgba(0,255,136,0.15)]";
+        } else if (scores.total > 20) {
+          colorMetricsClass = "bg-yellow-950/70 border-sys-warning text-sys-warning font-bold";
+        } else if (scores.total > 0) {
+          colorMetricsClass = "bg-red-950/70 border-sys-danger text-sys-danger font-bold";
+        }
       }
-      const isToday = loopDateStr === dateStr ? "ring-2 ring-white" : "";
+      
+      const isSelectedFrame = loopDateStr === auditedDateStr ? "ring-2 ring-sys-accent ring-offset-2 ring-offset-sys-base z-10 scale-105" : "";
+      const isTodayMarker = loopDateStr === todayRealStr ? "border-dashed border-2" : "";
+      
       grid.innerHTML += `
-        <div class="aspect-square rounded border flex flex-col items-center justify-center relative ${statusClass} ${isToday} transition-all hover:scale-105 cursor-pointer">
-          <span class="font-mono text-sm font-bold">${i}</span>
-          ${dayData && dayData.training.completed ? '<div class="absolute bottom-1 w-1 h-1 rounded-full bg-current"></div>' : ''}
+        <div onclick="selectCalendarDay('${loopDateStr}')" class="aspect-square rounded-xl border flex flex-col items-center justify-center relative ${colorMetricsClass} ${isSelectedFrame} ${isTodayMarker} transition-all duration-200 cursor-pointer select-none" title="Ver/Editar fecha: ${loopDateStr}">
+          <span class="font-mono text-xs md:text-sm">${i}</span>
+          ${dayData && dayData.training.completed ? '<div class="absolute bottom-1.5 w-1 h-1 rounded-full bg-current"></div>' : ''}
         </div>
       `;
     }
+
+    generateMonthlyTrendGraph(daysInMonth);
   }
 
   function renderAllViews() {
@@ -910,8 +1148,10 @@
   }
 
   window.onload = () => {
+    initTimeline();
     loadData();
     renderAllViews();
+    
     setInterval(() => {
       document.getElementById('sysClock').innerText = new Date().toLocaleTimeString('en-US', {hour12: false});
     }, 1000);
